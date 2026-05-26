@@ -1,0 +1,6 @@
+{
+  "name": "2k-season-2026",
+  "version": "1.0.0",
+  "private": true,
+  "engines": { "node": ">=18" }
+}

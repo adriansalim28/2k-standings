@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/api/standings", "dest": "/api/standings.js" }
+  ]
+}

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>2K Season 2026 — Standings</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#1D428A;
+  min-height:100vh;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Inter",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── HEADER ── */
+.header{max-width:640px;margin:0 auto;padding:40px 24px 24px}
+.header-eyebrow{
+  font-size:10px;font-weight:800;letter-spacing:3px;
+  text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;
+}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start}
+.header-title{
+  font-size:52px;font-weight:900;text-transform:uppercase;
+  color:#fff;letter-spacing:-2.5px;line-height:0.88;
+}
+.header-title em{font-style:normal;color:#F7C948}
+.header-right{
+  text-align:right;color:rgba(255,255,255,0.35);
+  font-size:10px;font-weight:700;letter-spacing:.8px;
+  line-height:2.2;text-transform:uppercase;padding-top:4px;
+}
+.header-datebadge{
+  display:inline-block;background:#C8102E;color:#fff;
+  font-size:10px;font-weight:800;letter-spacing:1.5px;
+  text-transform:uppercase;padding:6px 14px;
+  white-space:nowrap;margin-top:16px;
+}
+
+/* ── WRAP ── */
+.wrap{max-width:640px;margin:0 auto;padding:6px 24px 56px}
+
+/* ── ZONE ── */
+.zone{display:flex;gap:0;margin-bottom:14px}
+.zone-sidebar{
+  width:36px;flex-shrink:0;display:flex;
+  align-items:center;justify-content:center;
+}
+.zone-label{
+  font-size:10px;font-weight:900;letter-spacing:3.5px;
+  text-transform:uppercase;writing-mode:vertical-rl;
+  transform:rotate(180deg);white-space:nowrap;
+}
+.zone-label.playoffs{color:#F7C948}
+.zone-label.playin{color:#F97316}
+.zone-label.out{color:rgba(255,255,255,0.2)}
+.zone-body{
+  flex:1;border:2px dashed rgba(255,255,255,0.2);padding:6px;
+}
+.zone-body.out-zone{border-color:rgba(255,255,255,0.1)}
+
+/* ── ROW CARD ── */
+.row-card{
+  display:flex;align-items:center;gap:0;
+  background:#fff;margin:0;
+  border-bottom:1px solid #ebebeb;
+  overflow:hidden;
+  transition:filter .1s;
+  position:relative;
+}
+.row-card:last-child{border-bottom:none}
+.row-card:hover{filter:brightness(0.96)}
+.row-card.top-seed{background:#fffef5}
+
+/* Left color accent strip */
+.card-accent{width:3px;align-self:stretch;flex-shrink:0}
+
+/* Inner padding wrapper */
+.card-inner{
+  display:flex;align-items:center;gap:12px;
+  flex:1;padding:12px 14px 12px 12px;
+}
+
+/* ── RANK BOX ── */
+.rank-box{
+  width:32px;height:32px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:900;flex-shrink:0;
+}
+
+/* ── PLAYER BADGE ── */
+.player-badge{
+  width:40px;height:40px;border-radius:50%;
+  background:#fff;border:1.5px solid #e8e8e8;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;overflow:hidden;
+}
+.player-badge img{
+  width:34px;height:34px;object-fit:contain;display:block;
+}
+
+/* ── PLAYER INFO ── */
+.player-info{flex:1;overflow:hidden}
+.player-name{
+  font-size:16px;font-weight:900;text-transform:uppercase;
+  letter-spacing:.3px;color:#0d1117;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.player-sub{
+  font-size:10px;font-weight:600;color:#999;
+  letter-spacing:.4px;margin-top:2px;text-transform:uppercase;
+}
+
+/* ── RECORD ── */
+.record-block{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.record-nums{display:flex;align-items:center;gap:0}
+.rec-w{
+  font-size:28px;font-weight:900;color:#0d1117;
+  font-variant-numeric:tabular-nums;line-height:1;min-width:32px;text-align:center;
+}
+.rec-strip{
+  width:2px;height:26px;background:#e0e0e0;margin:0 10px;flex-shrink:0;
+}
+.rec-l{
+  font-size:28px;font-weight:900;color:#aaa;
+  font-variant-numeric:tabular-nums;line-height:1;min-width:32px;text-align:center;
+}
+.record-pct{
+  font-size:9px;font-weight:700;letter-spacing:.8px;
+  color:#bbb;text-transform:uppercase;white-space:nowrap;
+}
+
+/* ── STREAK BADGE ── */
+.strk-badge{
+  display:inline-block;font-size:9px;font-weight:900;
+  padding:2px 6px;letter-spacing:.5px;text-transform:uppercase;
+  vertical-align:middle;margin-left:6px;
+}
+.strk-w{background:#dcfce7;color:#16a34a}
+.strk-l{background:#fee2e2;color:#dc2626}
+
+/* ── LAST 5 DOTS ── */
+.l5-row{display:inline-flex;align-items:center;gap:3px;vertical-align:middle}
+.l5-dot{
+  width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0;
+}
+.l5-w{background:#22c55e}
+.l5-l{background:#f87171}
+.l5-empty{background:rgba(0,0,0,0.08);border:1px solid #ddd}
+
+/* ── MAGIC NUMBER BADGE ── */
+.mn-badge{
+  display:inline-block;font-size:9px;font-weight:800;
+  color:#F7C948;letter-spacing:.4px;text-transform:uppercase;
+}
+
+/* ── RESULTS SECTION ── */
+.results-label{
+  font-size:10px;font-weight:800;letter-spacing:3px;
+  text-transform:uppercase;color:rgba(255,255,255,0.35);
+  margin:20px 0 8px 36px;
+}
+.results-zone{
+  margin-left:36px;
+  border:2px dashed rgba(255,255,255,0.12);
+  overflow:hidden;
+}
+.result-card{
+  display:flex;align-items:center;padding:12px 16px;gap:10px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  transition:background .1s;
+}
+.result-card:hover{background:rgba(255,255,255,0.03)}
+.result-card:last-child{border-bottom:none}
+.result-team{flex:1;display:flex;align-items:center;gap:8px;overflow:hidden}
+.result-team-right{justify-content:flex-end}
+.result-badge{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  background:#fff;border:1px solid rgba(255,255,255,0.15);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.result-badge img{
+  width:25px;height:25px;object-fit:contain;display:block;
+}
+.result-name{
+  font-size:11px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.5px;white-space:nowrap;
+}
+.result-winner .result-name{color:#fff}
+.result-loser  .result-name{color:rgba(255,255,255,0.28)}
+.result-scores{
+  display:flex;align-items:center;flex-shrink:0;
+  background:rgba(0,0,0,0.3);min-width:88px;justify-content:center;
+  padding:7px 12px;gap:0;border-radius:0;
+}
+.result-score{
+  font-size:17px;font-weight:900;font-variant-numeric:tabular-nums;
+  min-width:26px;text-align:center;
+}
+.rscore-win{color:#fff}
+.rscore-lose{color:rgba(255,255,255,0.22)}
+.result-strip{width:1px;height:18px;background:rgba(255,255,255,0.15);margin:0 8px}
+
+/* ── NBA-STYLE BRACKET ── */
+.brk-section{margin-top:24px}
+.brk-outer{margin-left:36px;overflow-x:auto}
+.brk-header-row{
+  display:flex;align-items:center;margin-bottom:10px;
+  font-size:9px;font-weight:800;letter-spacing:2.5px;
+  text-transform:uppercase;color:rgba(255,255,255,0.3);
+}
+.brk-body-row{display:flex;align-items:flex-start;height:206px}
+.brk-matchup{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);overflow:hidden;
+}
+.brk-slot{
+  display:flex;align-items:center;gap:8px;
+  padding:0 10px;height:46px;
+}
+.brk-divider{height:1px;background:rgba(255,255,255,0.08)}
+.brk-seed{
+  font-size:9px;font-weight:900;color:rgba(255,255,255,0.25);
+  min-width:14px;text-align:center;
+}
+.brk-tname{
+  font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.4px;color:rgba(255,255,255,0.2);
+}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;padding:28px;
+  font-size:9px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:rgba(255,255,255,0.12);
+}
+
+@media(max-width:500px){
+  .header-title{font-size:38px}
+  .rec-w,.rec-l{font-size:22px}
+  .player-badge{width:34px;height:34px}
+  .player-badge img{width:28px;height:28px}
+  .card-inner{gap:9px;padding:10px 10px 10px 9px}
+  .zone-sidebar{width:28px}
+  .zone-label{font-size:8px;letter-spacing:2px}
+  .results-label,.results-zone{margin-left:28px}
+  .header{padding:32px 16px 20px}
+  .wrap{padding:4px 16px 48px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eyebrow">🏀 2K Basketball League</div>
+  <div class="header-top">
+    <div>
+      <div class="header-title">WHO'S ON<br>THE <em>MOVE?</em></div>
+      <div class="header-datebadge">Standings through 27 May 2026, 01:04 WIB</div>
+    </div>
+    <div class="header-right">
+      7 Players<br>
+      Dbl Round Robin<br>
+      42 Games
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="zone">
+    <div class="zone-sidebar"><span class="zone-label playoffs">Playoffs</span></div>
+    <div class="zone-body">
+      <div class="row-card top-seed">
+      <div class="card-accent" style="background:#860038"></div>
+      <div class="card-inner">
+        <div class="rank-box" style="background:#F7C948;color:#111">1</div>
+        <div class="player-badge">
+          <img src="https://a.espncdn.com/i/teamlogos/nba/500/cle.png" alt="Cavaliers" loading="lazy">
+        </div>
+        <div class="player-info">
+          <div class="player-name">ARGA <span class="strk-badge strk-w">W4</span></div>
+          <div class="player-sub">GP 4 &nbsp;·&nbsp; GB — &nbsp;·&nbsp; +77 PD&nbsp;·&nbsp;<span class="mn-badge">MN 9</span> &nbsp; <span class="l5-row"><span class="l5-dot l5-empty"></span><span class="l5-dot l5-w"></span><span class="l5-dot l5-w"></span><span class="l5-dot l5-w"></span><span class="l5-dot l5-w"></span></span></div>
+        </div>
+        <div class="record-block">
+          <div class="record-nums">
+            <span class="rec-w">4</span>
+            <span class="rec-strip"></span>
+            <span class="rec-l">0</span>
+          </div>
+          <div class="record-pct">1.000 WIN%</div>
+        </div>
+      </div>
+    </div>
+<div class="row-card">
+      <div class="card-accent" style="background:#007AC1"></div>
+      <div class="card-inner">
+        <div class="rank-box" style="background:#1a2540;color:#fff">2</div>
+        <div class="player-badge">
+          <img src="https://a.espncdn.com/i/teamlogos/nba/500/okc.png" alt="Thunder" loading="lazy">
+        </div>
+        <div class="player-info">
+          <div class="player-name">AZHAR <span class="strk-badge strk-w">W2</span></div>
+          <div class="player-sub">GP 2 &nbsp;·&nbsp; GB 1 &nbsp;·&nbsp; +19 PD &nbsp; <span class="l5-row"><span class="l5-dot l5-empty"></span><span class="l5-dot l5-empty"></span><span class="l5-dot l5-empty"></span><span class="l5-dot l5-w"></span><span class="l5-dot l5-w"></span></span></div>
+        </div>
+        <div class="record-block">
+          <div class="record-nums">
+            <span class="rec-w">2</span>
+            <span class="rec-strip"></span>
+            <span class="rec-l">0</span>
+          </div>
+          <div class="record-pct">1.000 WIN%</div>
+        </div>
+      </div>
+    </div>
+<div class="row-card">
+      <div class="card-accent" style="background:#1a1a1a"></div>
+      <div class="card-inner">
+        <div class="rank-box" style="background:#2a3a5c;color:#fff">3</div>
+        <div class="player-badge">
+          <img src="https://a.espncdn.com/i/teamlogos/nba/500/sa.png" alt="Spurs" loading="lazy">
+        </div>
+        <div class="player-info">
+          <div class="player-name">VIERI <span class="strk-badge strk-w">W1</span></div>
+          <div class="player-sub">GP 1 &nbsp;·&nbsp; GB 1.5 &nbsp;·&nbsp; +1 PD &nbsp; <span class="l5-row"><span class="l5-dot l5-empty"></span><span class="l5-dot l5-empty"></span><span class="l5-dot l5-empty"></span><span class="l5-dot l5-empty"></span><span class="l5-dot l5-w"></span></span></div>
+        </div>
+        <div class="record-block">
+          <div class="record-nums">
+            <span class="rec-w">1</span>
+            <span class="rec-strip"></span>
+            <span class="rec-l">0</span>
+          </div>
+          <div class="record-pct">1.000 WIN%</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="zone">
+    <div class="zone-sidebar"><span class="zone-label playin">Play-In</span></div>
+    <div class="zone-body" style="border-color:rgba(249,115,22,0.3)">
+      <div class="row-card">
+      <div class="card-accent" style="background:#552583"></div>
+      <div class="card-inner">
+        <div class="rank-box" style="background:#374769;color:#fff">4</div>
+        <div class="player-badge">
+          <img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" alt="Lakers" loading="lazy">
+        </div>
+        <div class="player-info">
+          <div class="player-name">ADRIAN <span class="strk-badge strk-l">L1</span></div>
+          <div class="player-sub">GP 7 &nbsp;·&nbsp; GB 2.5 &nbsp;·&nbsp; +27 PD &nbsp; <span class="l5-row"><span class="l5-dot l5-l"></span><span class="l5-dot l5-w"></span><span class="l5-dot l5-l"></span><span class="l5-dot l5-w"></span><span class="l5-dot l5-l"></span></span></div>
+        </div>
+        <div class="record-block">
+          <div class="record-nums">
+            <span class="rec-w">3</span>
+            <span class="rec-strip"></span>
+            <span class="rec-l">4</span>
+          </div>
+          <div class="record-pct">.428 WIN%</div>
+        </div>
+      </div>
+    </div>
+<div class="row-card">
+      <div class="card-accent" style="background:#F58426"></div>
+      <div class="card-inner">
+        <div class="rank-box" style="background:#374769;color:#fff">5</div>
+        <div class="player-badge">
+          <img src="https://a.espncdn.com/i/teamlogos/nba/500/ny.png" alt="Knicks" loading="lazy">
+        </div>
+        <div class="player-info">
+          <div class="player-name">DHANI <span class="strk-badge strk-l">L1</span></div>
+          <div class="player-sub">GP 1 &nbsp;·&nbsp; GB 2.5 &nbsp;·&nbsp; -10 PD &nbsp; <span class="l5-row"><span class="l5-dot l5-empty"></span><span class="l5-dot l5-empty"></span><span class="l5-dot l5-empty"></span><span class="l5-dot l5-empty"></span><span class="l5-dot l5-l"></span></span></div>
+        </div>
+        <div class="record-block">
+          <div class="record-nums">
+            <span class="rec-w">0</span>
+            <span class="rec-strip"></span>
+            <span class="rec-l">1</span>
+          </div>
+          <div class="record-pct">.000 WIN%</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="zone">
+    <div class="zone-sidebar"><span class="zone-label out">Out</span></div>
+    <div class="zone-body out-zone">
+      <div class="row-card">
+      <div class="card-accent" style="background:#0C2340"></div>
+      <div class="card-inner">
+        <div class="rank-box" style="background:#374769;color:#fff">6</div>
+        <div class="player-badge">
+          <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Wolves" loading="lazy">
+        </div>
+        <div class="player-info">
+          <div class="player-name">ROKHMAD <span class="strk-badge strk-l">L3</span></div>
+          <div class="player-sub">GP 3 &nbsp;·&nbsp; GB 3.5 &nbsp;·&nbsp; -52 PD &nbsp; <span class="l5-row"><span class="l5-dot l5-empty"></span><span class="l5-dot l5-empty"></span><span class="l5-dot l5-l"></span><span class="l5-dot l5-l"></span><span class="l5-dot l5-l"></span></span></div>
+        </div>
+        <div class="record-block">
+          <div class="record-nums">
+            <span class="rec-w">0</span>
+            <span class="rec-strip"></span>
+            <span class="rec-l">3</span>
+          </div>
+          <div class="record-pct">.000 WIN%</div>
+        </div>
+      </div>
+    </div>
+<div class="row-card">
+      <div class="card-accent" style="background:#007A33"></div>
+      <div class="card-inner">
+        <div class="rank-box" style="background:#374769;color:#fff">7</div>
+        <div class="player-badge">
+          <img src="https://a.espncdn.com/i/teamlogos/nba/500/bos.png" alt="Celtics" loading="lazy">
+        </div>
+        <div class="player-info">
+          <div class="player-name">YODHA <span class="strk-badge strk-l">L2</span></div>
+          <div class="player-sub">GP 2 &nbsp;·&nbsp; GB 3 &nbsp;·&nbsp; -62 PD &nbsp; <span class="l5-row"><span class="l5-dot l5-empty"></span><span class="l5-dot l5-empty"></span><span class="l5-dot l5-empty"></span><span class="l5-dot l5-l"></span><span class="l5-dot l5-l"></span></span></div>
+        </div>
+        <div class="record-block">
+          <div class="record-nums">
+            <span class="rec-w">0</span>
+            <span class="rec-strip"></span>
+            <span class="rec-l">2</span>
+          </div>
+          <div class="record-pct">.000 WIN%</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="results-label">Recent Results</div>
+  <div class="results-zone">
+    <div class="result-card">
+      <div class="result-team result-loser">
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" alt="Adrian" loading="lazy"></div>
+        <span class="result-name">ADRIAN</span>
+      </div>
+      <div class="result-scores">
+        <span class="result-score rscore-lose">61</span>
+        <span class="result-strip"></span>
+        <span class="result-score rscore-win">64</span>
+      </div>
+      <div class="result-team result-team-right result-winner">
+        <span class="result-name">ARGA</span>
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/cle.png" alt="Arga" loading="lazy"></div>
+      </div>
+    </div>
+<div class="result-card">
+      <div class="result-team result-loser">
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Rokhmad" loading="lazy"></div>
+        <span class="result-name">ROKHMAD</span>
+      </div>
+      <div class="result-scores">
+        <span class="result-score rscore-lose">39</span>
+        <span class="result-strip"></span>
+        <span class="result-score rscore-win">63</span>
+      </div>
+      <div class="result-team result-team-right result-winner">
+        <span class="result-name">ADRIAN</span>
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" alt="Adrian" loading="lazy"></div>
+      </div>
+    </div>
+<div class="result-card">
+      <div class="result-team result-winner">
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/cle.png" alt="Arga" loading="lazy"></div>
+        <span class="result-name">ARGA</span>
+      </div>
+      <div class="result-scores">
+        <span class="result-score rscore-win">70</span>
+        <span class="result-strip"></span>
+        <span class="result-score rscore-lose">48</span>
+      </div>
+      <div class="result-team result-team-right result-loser">
+        <span class="result-name">YODHA</span>
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/bos.png" alt="Yodha" loading="lazy"></div>
+      </div>
+    </div>
+<div class="result-card">
+      <div class="result-team result-loser">
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" alt="Adrian" loading="lazy"></div>
+        <span class="result-name">ADRIAN</span>
+      </div>
+      <div class="result-scores">
+        <span class="result-score rscore-lose">71</span>
+        <span class="result-strip"></span>
+        <span class="result-score rscore-win">80</span>
+      </div>
+      <div class="result-team result-team-right result-winner">
+        <span class="result-name">AZHAR</span>
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/okc.png" alt="Azhar" loading="lazy"></div>
+      </div>
+    </div>
+<div class="result-card">
+      <div class="result-team result-winner">
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/okc.png" alt="Azhar" loading="lazy"></div>
+        <span class="result-name">AZHAR</span>
+      </div>
+      <div class="result-scores">
+        <span class="result-score rscore-win">58</span>
+        <span class="result-strip"></span>
+        <span class="result-score rscore-lose">48</span>
+      </div>
+      <div class="result-team result-team-right result-loser">
+        <span class="result-name">DHANI</span>
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/ny.png" alt="Dhani" loading="lazy"></div>
+      </div>
+    </div>
+<div class="result-card">
+      <div class="result-team result-loser">
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Rokhmad" loading="lazy"></div>
+        <span class="result-name">ROKHMAD</span>
+      </div>
+      <div class="result-scores">
+        <span class="result-score rscore-lose">48</span>
+        <span class="result-strip"></span>
+        <span class="result-score rscore-win">70</span>
+      </div>
+      <div class="result-team result-team-right result-winner">
+        <span class="result-name">ARGA</span>
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/cle.png" alt="Arga" loading="lazy"></div>
+      </div>
+    </div>
+<div class="result-card">
+      <div class="result-team result-loser">
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/bos.png" alt="Yodha" loading="lazy"></div>
+        <span class="result-name">YODHA</span>
+      </div>
+      <div class="result-scores">
+        <span class="result-score rscore-lose">37</span>
+        <span class="result-strip"></span>
+        <span class="result-score rscore-win">77</span>
+      </div>
+      <div class="result-team result-team-right result-winner">
+        <span class="result-name">ADRIAN</span>
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" alt="Adrian" loading="lazy"></div>
+      </div>
+    </div>
+<div class="result-card">
+      <div class="result-team result-loser">
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" alt="Adrian" loading="lazy"></div>
+        <span class="result-name">ADRIAN</span>
+      </div>
+      <div class="result-scores">
+        <span class="result-score rscore-lose">44</span>
+        <span class="result-strip"></span>
+        <span class="result-score rscore-win">45</span>
+      </div>
+      <div class="result-team result-team-right result-winner">
+        <span class="result-name">VIERI</span>
+        <div class="result-badge"><img src="https://a.espncdn.com/i/teamlogos/nba/500/sa.png" alt="Vieri" loading="lazy"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="brk-section">
+  <div class="results-label" style="margin-bottom:10px">Playoff Bracket</div>
+  <div class="brk-outer">
+    <div class="brk-header-row">
+      <div style="flex:0 0 130px;text-align:center">Play-In</div>
+      <div style="flex:0 0 20px"></div>
+      <div style="flex:0 0 130px;text-align:center">Semifinals</div>
+      <div style="flex:0 0 20px"></div>
+      <div style="flex:0 0 130px;text-align:center">Final</div>
+      <div style="flex:0 0 20px"></div>
+      <div style="flex:0 0 60px;text-align:center">Champion</div>
+    </div>
+    <div class="brk-body-row">
+
+      <!-- Play-In -->
+      <div style="flex:0 0 130px">
+        <div class="brk-matchup">
+          <div class="brk-slot"><span class="brk-seed">#4</span><span class="brk-tname">TBD</span></div>
+          <div class="brk-divider"></div>
+          <div class="brk-slot"><span class="brk-seed">#5</span><span class="brk-tname">TBD</span></div>
+        </div>
+      </div>
+      <div style="flex:0 0 20px"><svg width="20" height="206" style="display:block;flex-shrink:0"><line x1="0" y1="23" x2="0" y2="70" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/><line x1="0" y1="46" x2="10" y2="46" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/><line x1="10" y1="46" x2="10" y2="70" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/><line x1="10" y1="70" x2="20" y2="70" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/><line x1="12" y1="23" x2="20" y2="23" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-dasharray="4,3"/></svg></div>
+
+      <!-- Semis -->
+      <div style="flex:0 0 130px">
+        <div class="brk-matchup">
+          <div class="brk-slot"><span class="brk-seed">#1</span><span class="brk-tname">TBD</span></div>
+          <div class="brk-divider"></div>
+          <div class="brk-slot"><span class="brk-seed">W</span><span class="brk-tname">Play-In W</span></div>
+        </div>
+        <div style="height:20px"></div>
+        <div class="brk-matchup">
+          <div class="brk-slot"><span class="brk-seed">#2</span><span class="brk-tname">TBD</span></div>
+          <div class="brk-divider"></div>
+          <div class="brk-slot"><span class="brk-seed">#3</span><span class="brk-tname">TBD</span></div>
+        </div>
+      </div>
+      <div style="flex:0 0 20px"><svg width="20" height="206" style="display:block;flex-shrink:0"><line x1="0" y1="23" x2="0" y2="70" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/><line x1="0" y1="46" x2="10" y2="46" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/><line x1="0" y1="136" x2="0" y2="183" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/><line x1="0" y1="160" x2="10" y2="160" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/><line x1="10" y1="46" x2="10" y2="160" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/><line x1="10" y1="103" x2="20" y2="103" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/></svg></div>
+
+      <!-- Final -->
+      <div style="flex:0 0 130px">
+        <div style="height:57px"></div>
+        <div class="brk-matchup">
+          <div class="brk-slot"><span class="brk-seed">—</span><span class="brk-tname">TBD</span></div>
+          <div class="brk-divider"></div>
+          <div class="brk-slot"><span class="brk-seed">—</span><span class="brk-tname">TBD</span></div>
+        </div>
+      </div>
+      <div style="flex:0 0 20px"><svg width="20" height="206" style="display:block;flex-shrink:0"><line x1="0" y1="80" x2="0" y2="127" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/><line x1="0" y1="103" x2="20" y2="103" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/></svg></div>
+
+      <!-- Champion -->
+      <div style="flex:0 0 60px;display:flex;flex-direction:column;align-items:center;padding-top:80px">
+        <div style="font-size:26px;line-height:1">🏆</div>
+        <div style="font-size:9px;font-weight:800;color:rgba(255,255,255,0.18);letter-spacing:2px;text-transform:uppercase;margin-top:6px">TBD</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer>2K Season 2026 &nbsp;·&nbsp; Generated 27 May 2026, 01:04 WIB</footer>
+</body>
+</html>
