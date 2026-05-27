@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-05-27T17:38:49.331Z",
+  "updatedAt": "2026-05-27T17:39:15.334Z",
   "matches": [
     {
       "id": "G001",
@@ -224,8 +224,8 @@
       "leg": 2,
       "home": "Arga",
       "away": "Rokhmad",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 58,
+      "awayScore": 49
     },
     {
       "id": "G029",
