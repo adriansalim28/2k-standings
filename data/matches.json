@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-05-27T18:01:02.566Z",
+  "updatedAt": "2026-05-27T18:01:09.518Z",
   "matches": [
     {
       "id": "G001",
@@ -192,7 +192,8 @@
       "home": "Arga",
       "away": "Adrian",
       "homeScore": 72,
-      "awayScore": 42
+      "awayScore": 42,
+      "playedAt": "2026-05-27T18:01:09.518Z"
     },
     {
       "id": "G024",
