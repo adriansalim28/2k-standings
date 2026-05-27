@@ -1,49 +1,343 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-05-28T00:00:00.000Z",
+  "updatedAt": "2026-05-27T17:34:34.050Z",
   "matches": [
-    { "id": "G001", "leg": 1, "home": "Adrian",  "away": "Rokhmad", "homeScore": null, "awayScore": null },
-    { "id": "G002", "leg": 1, "home": "Adrian",  "away": "Arga",    "homeScore": null, "awayScore": null },
-    { "id": "G003", "leg": 1, "home": "Adrian",  "away": "Vieri",   "homeScore": null, "awayScore": null },
-    { "id": "G004", "leg": 1, "home": "Adrian",  "away": "Yodha",   "homeScore": null, "awayScore": null },
-    { "id": "G005", "leg": 1, "home": "Adrian",  "away": "Azhar",   "homeScore": null, "awayScore": null },
-    { "id": "G006", "leg": 1, "home": "Adrian",  "away": "Dhani",   "homeScore": null, "awayScore": null },
-    { "id": "G007", "leg": 1, "home": "Rokhmad", "away": "Arga",    "homeScore": null, "awayScore": null },
-    { "id": "G008", "leg": 1, "home": "Rokhmad", "away": "Vieri",   "homeScore": null, "awayScore": null },
-    { "id": "G009", "leg": 1, "home": "Rokhmad", "away": "Yodha",   "homeScore": null, "awayScore": null },
-    { "id": "G010", "leg": 1, "home": "Rokhmad", "away": "Azhar",   "homeScore": null, "awayScore": null },
-    { "id": "G011", "leg": 1, "home": "Rokhmad", "away": "Dhani",   "homeScore": null, "awayScore": null },
-    { "id": "G012", "leg": 1, "home": "Arga",    "away": "Vieri",   "homeScore": null, "awayScore": null },
-    { "id": "G013", "leg": 1, "home": "Arga",    "away": "Yodha",   "homeScore": null, "awayScore": null },
-    { "id": "G014", "leg": 1, "home": "Arga",    "away": "Azhar",   "homeScore": null, "awayScore": null },
-    { "id": "G015", "leg": 1, "home": "Arga",    "away": "Dhani",   "homeScore": null, "awayScore": null },
-    { "id": "G016", "leg": 1, "home": "Vieri",   "away": "Yodha",   "homeScore": null, "awayScore": null },
-    { "id": "G017", "leg": 1, "home": "Vieri",   "away": "Azhar",   "homeScore": null, "awayScore": null },
-    { "id": "G018", "leg": 1, "home": "Vieri",   "away": "Dhani",   "homeScore": null, "awayScore": null },
-    { "id": "G019", "leg": 1, "home": "Yodha",   "away": "Azhar",   "homeScore": null, "awayScore": null },
-    { "id": "G020", "leg": 1, "home": "Yodha",   "away": "Dhani",   "homeScore": null, "awayScore": null },
-    { "id": "G021", "leg": 1, "home": "Azhar",   "away": "Dhani",   "homeScore": null, "awayScore": null },
-    { "id": "G022", "leg": 2, "home": "Rokhmad", "away": "Adrian",  "homeScore": null, "awayScore": null },
-    { "id": "G023", "leg": 2, "home": "Arga",    "away": "Adrian",  "homeScore": null, "awayScore": null },
-    { "id": "G024", "leg": 2, "home": "Vieri",   "away": "Adrian",  "homeScore": null, "awayScore": null },
-    { "id": "G025", "leg": 2, "home": "Yodha",   "away": "Adrian",  "homeScore": null, "awayScore": null },
-    { "id": "G026", "leg": 2, "home": "Azhar",   "away": "Adrian",  "homeScore": null, "awayScore": null },
-    { "id": "G027", "leg": 2, "home": "Dhani",   "away": "Adrian",  "homeScore": null, "awayScore": null },
-    { "id": "G028", "leg": 2, "home": "Arga",    "away": "Rokhmad", "homeScore": null, "awayScore": null },
-    { "id": "G029", "leg": 2, "home": "Vieri",   "away": "Rokhmad", "homeScore": null, "awayScore": null },
-    { "id": "G030", "leg": 2, "home": "Yodha",   "away": "Rokhmad", "homeScore": null, "awayScore": null },
-    { "id": "G031", "leg": 2, "home": "Azhar",   "away": "Rokhmad", "homeScore": null, "awayScore": null },
-    { "id": "G032", "leg": 2, "home": "Dhani",   "away": "Rokhmad", "homeScore": null, "awayScore": null },
-    { "id": "G033", "leg": 2, "home": "Vieri",   "away": "Arga",    "homeScore": null, "awayScore": null },
-    { "id": "G034", "leg": 2, "home": "Yodha",   "away": "Arga",    "homeScore": null, "awayScore": null },
-    { "id": "G035", "leg": 2, "home": "Azhar",   "away": "Arga",    "homeScore": null, "awayScore": null },
-    { "id": "G036", "leg": 2, "home": "Dhani",   "away": "Arga",    "homeScore": null, "awayScore": null },
-    { "id": "G037", "leg": 2, "home": "Yodha",   "away": "Vieri",   "homeScore": null, "awayScore": null },
-    { "id": "G038", "leg": 2, "home": "Azhar",   "away": "Vieri",   "homeScore": null, "awayScore": null },
-    { "id": "G039", "leg": 2, "home": "Dhani",   "away": "Vieri",   "homeScore": null, "awayScore": null },
-    { "id": "G040", "leg": 2, "home": "Azhar",   "away": "Yodha",   "homeScore": null, "awayScore": null },
-    { "id": "G041", "leg": 2, "home": "Dhani",   "away": "Yodha",   "homeScore": null, "awayScore": null },
-    { "id": "G042", "leg": 2, "home": "Dhani",   "away": "Azhar",   "homeScore": null, "awayScore": null }
+    {
+      "id": "G001",
+      "leg": 1,
+      "home": "Adrian",
+      "away": "Rokhmad",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G002",
+      "leg": 1,
+      "home": "Adrian",
+      "away": "Arga",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G003",
+      "leg": 1,
+      "home": "Adrian",
+      "away": "Vieri",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G004",
+      "leg": 1,
+      "home": "Adrian",
+      "away": "Yodha",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G005",
+      "leg": 1,
+      "home": "Adrian",
+      "away": "Azhar",
+      "homeScore": 71,
+      "awayScore": 80
+    },
+    {
+      "id": "G006",
+      "leg": 1,
+      "home": "Adrian",
+      "away": "Dhani",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G007",
+      "leg": 1,
+      "home": "Rokhmad",
+      "away": "Arga",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G008",
+      "leg": 1,
+      "home": "Rokhmad",
+      "away": "Vieri",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G009",
+      "leg": 1,
+      "home": "Rokhmad",
+      "away": "Yodha",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G010",
+      "leg": 1,
+      "home": "Rokhmad",
+      "away": "Azhar",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G011",
+      "leg": 1,
+      "home": "Rokhmad",
+      "away": "Dhani",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G012",
+      "leg": 1,
+      "home": "Arga",
+      "away": "Vieri",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G013",
+      "leg": 1,
+      "home": "Arga",
+      "away": "Yodha",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G014",
+      "leg": 1,
+      "home": "Arga",
+      "away": "Azhar",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G015",
+      "leg": 1,
+      "home": "Arga",
+      "away": "Dhani",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G016",
+      "leg": 1,
+      "home": "Vieri",
+      "away": "Yodha",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G017",
+      "leg": 1,
+      "home": "Vieri",
+      "away": "Azhar",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G018",
+      "leg": 1,
+      "home": "Vieri",
+      "away": "Dhani",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G019",
+      "leg": 1,
+      "home": "Yodha",
+      "away": "Azhar",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G020",
+      "leg": 1,
+      "home": "Yodha",
+      "away": "Dhani",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G021",
+      "leg": 1,
+      "home": "Azhar",
+      "away": "Dhani",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G022",
+      "leg": 2,
+      "home": "Rokhmad",
+      "away": "Adrian",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G023",
+      "leg": 2,
+      "home": "Arga",
+      "away": "Adrian",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G024",
+      "leg": 2,
+      "home": "Vieri",
+      "away": "Adrian",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G025",
+      "leg": 2,
+      "home": "Yodha",
+      "away": "Adrian",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G026",
+      "leg": 2,
+      "home": "Azhar",
+      "away": "Adrian",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G027",
+      "leg": 2,
+      "home": "Dhani",
+      "away": "Adrian",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G028",
+      "leg": 2,
+      "home": "Arga",
+      "away": "Rokhmad",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G029",
+      "leg": 2,
+      "home": "Vieri",
+      "away": "Rokhmad",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G030",
+      "leg": 2,
+      "home": "Yodha",
+      "away": "Rokhmad",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G031",
+      "leg": 2,
+      "home": "Azhar",
+      "away": "Rokhmad",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G032",
+      "leg": 2,
+      "home": "Dhani",
+      "away": "Rokhmad",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G033",
+      "leg": 2,
+      "home": "Vieri",
+      "away": "Arga",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G034",
+      "leg": 2,
+      "home": "Yodha",
+      "away": "Arga",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G035",
+      "leg": 2,
+      "home": "Azhar",
+      "away": "Arga",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G036",
+      "leg": 2,
+      "home": "Dhani",
+      "away": "Arga",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G037",
+      "leg": 2,
+      "home": "Yodha",
+      "away": "Vieri",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G038",
+      "leg": 2,
+      "home": "Azhar",
+      "away": "Vieri",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G039",
+      "leg": 2,
+      "home": "Dhani",
+      "away": "Vieri",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G040",
+      "leg": 2,
+      "home": "Azhar",
+      "away": "Yodha",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G041",
+      "leg": 2,
+      "home": "Dhani",
+      "away": "Yodha",
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "G042",
+      "leg": 2,
+      "home": "Dhani",
+      "away": "Azhar",
+      "homeScore": null,
+      "awayScore": null
+    }
   ]
 }
