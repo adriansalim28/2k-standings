@@ -1,14 +1,15 @@
 const REPO = 'adriansalim28/2k-standings';
+const fs   = require('fs');
+const path = require('path');
 
-const PLAYER_TEAMS = {
-  Adrian:  { name: 'Lakers',    abbrev: 'lal', color: '#552583' },
-  Azhar:   { name: 'Thunder',   abbrev: 'okc', color: '#007AC1' },
-  Arga:    { name: 'Cavaliers', abbrev: 'cle', color: '#860038' },
-  Yodha:   { name: 'Celtics',   abbrev: 'bos', color: '#007A33' },
-  Rokhmad: { name: 'Wolves',    abbrev: 'min', color: '#0C2340' },
-  Dhani:   { name: 'Knicks',    abbrev: 'ny',  color: '#F58426' },
-  Vieri:   { name: 'Spurs',     abbrev: 'sa',  color: '#1a1a1a' },
-};
+// Source of truth: data/players.json — edit that file for team changes / Wild Card swaps
+function loadPlayerTeams() {
+  const raw = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/players.json'), 'utf8'));
+  const map = {};
+  raw.players.forEach(p => { map[p.name] = { name: p.team, abbrev: p.abbrev, color: p.color }; });
+  return map;
+}
+const PLAYER_TEAMS = loadPlayerTeams();
 
 function logoUrl(abbrev) {
   return `https://a.espncdn.com/i/teamlogos/nba/500/${abbrev}.png`;
