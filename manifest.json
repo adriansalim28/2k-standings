@@ -1,6 +1,6 @@
 {
   "name": "2K Season 2026",
-  "short_name": "2K Season",
+  "short_name": "2K FF",
   "description": "NBA 2K Basketball League — Live Standings & Scores",
   "start_url": "/",
   "display": "standalone",
@@ -9,12 +9,12 @@
   "theme_color": "#1D428A",
   "icons": [
     {
-      "src": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
+      "src": "/icon.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
+      "src": "/icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
