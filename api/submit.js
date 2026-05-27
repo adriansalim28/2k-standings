@@ -1,23 +1,11 @@
-const BASE_TOKEN    = 'OaKybENNnaGWkIstbYplgvNBg5d';
-const MATCHES_TABLE = 'tblwFOxYns6UTkZH';
-const APP_ID        = 'cli_aa9da0c31078ded1';
+const REPO = 'adriansalim28/2k-standings';
 
-// Matches table field IDs
-const FIELD_HOME_SCORE = 'fldjEcj3Ns';
-const FIELD_AWAY_SCORE = 'fldIKc8YGU';
-const FIELD_HWV        = 'fldtXAJYFa'; // Home Win Value — drives Players.W formula
-const FIELD_AWV        = 'fldSyA90Y3'; // Away Win Value — drives Players.L formula
-const FIELD_PROCESSED  = 'fldlCr4hpg';
-
-async function getTenantToken() {
-  const r = await fetch('https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ app_id: APP_ID, app_secret: process.env.LARK_APP_SECRET }),
-  });
-  const d = await r.json();
-  return d.tenant_access_token;
-}
+const GH_HEADERS = () => ({
+  'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+  'Accept': 'application/vnd.github.v3+json',
+  'User-Agent': '2k-standings',
+  'Content-Type': 'application/json',
+});
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -27,10 +15,10 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Method not allowed' });
 
-  const { recordId, homeScore, awayScore } = req.body || {};
+  const { gameId, homeScore, awayScore } = req.body || {};
 
-  if (!recordId || homeScore == null || awayScore == null) {
-    return res.status(400).json({ ok: false, error: 'Missing fields: recordId, homeScore, awayScore' });
+  if (!gameId || homeScore == null || awayScore == null) {
+    return res.status(400).json({ ok: false, error: 'Missing fields: gameId, homeScore, awayScore' });
   }
 
   const hs  = Number(homeScore);
@@ -44,35 +32,46 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const token = await getTenantToken();
+    // 1. Get current file + SHA from GitHub
+    const getRes  = await fetch(`https://api.github.com/repos/${REPO}/contents/data/matches.json`, { headers: GH_HEADERS() });
+    const fileMeta = await getRes.json();
 
-    const fields = {
-      [FIELD_HOME_SCORE]: hs,
-      [FIELD_AWAY_SCORE]: as_,
-      [FIELD_HWV]:        hs > as_ ? 1 : 0,
-      [FIELD_AWV]:        as_ > hs ? 1 : 0,
-      [FIELD_PROCESSED]:  true,
-    };
-
-    const r = await fetch(
-      `https://open.larksuite.com/open-apis/bitable/v1/apps/${BASE_TOKEN}/tables/${MATCHES_TABLE}/records/${recordId}`,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ fields }),
-      }
-    );
-
-    const data = await r.json();
-
-    if (data.code !== 0) {
-      return res.status(500).json({ ok: false, error: data.msg || 'Lark API error' });
+    if (!fileMeta.content || !fileMeta.sha) {
+      return res.status(500).json({ ok: false, error: 'Could not read matches file from GitHub' });
     }
 
-    res.json({ ok: true });
+    const data = JSON.parse(Buffer.from(fileMeta.content, 'base64').toString());
+
+    // 2. Find and update the game
+    const idx = data.matches.findIndex(m => m.id === gameId);
+    if (idx === -1) {
+      return res.status(404).json({ ok: false, error: `Game ${gameId} not found` });
+    }
+
+    data.matches[idx].homeScore = hs;
+    data.matches[idx].awayScore = as_;
+    data.updatedAt = new Date().toISOString();
+
+    // 3. Commit back to GitHub
+    const newContent = Buffer.from(JSON.stringify(data, null, 2)).toString('base64');
+
+    const putRes = await fetch(`https://api.github.com/repos/${REPO}/contents/data/matches.json`, {
+      method: 'PUT',
+      headers: GH_HEADERS(),
+      body: JSON.stringify({
+        message: `score: ${gameId} — ${hs}-${as_}`,
+        content: newContent,
+        sha:     fileMeta.sha,
+      }),
+    });
+
+    const putData = await putRes.json();
+
+    if (putData.content) {
+      res.json({ ok: true });
+    } else {
+      res.status(500).json({ ok: false, error: putData.message || 'GitHub API error' });
+    }
   } catch (e) {
     res.status(500).json({ ok: false, error: e.message });
   }

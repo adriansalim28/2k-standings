@@ -1,17 +1,4 @@
-const BASE_TOKEN = 'OaKybENNnaGWkIstbYplgvNBg5d';
-const PLAYERS_TABLE = 'tbl1d07ESYbMjgJ6';
-const MATCHES_TABLE = 'tblwFOxYns6UTkZH';
-const APP_ID = 'cli_aa9da0c31078ded1';
-
-const PLAYERS_MAP = {
-  'recvkJoDKAOtBS': 'Adrian',
-  'recvkJoDKA02nw': 'Rokhmad',
-  'recvkJoDKALj4b': 'Arga',
-  'recvkJoDKAtvJF': 'Vieri',
-  'recvkJoDKAjuFu': 'Yodha',
-  'recvkJoDKAfHan': 'Azhar',
-  'recvkJoDKAbL5v': 'Dhani',
-};
+const REPO = 'adriansalim28/2k-standings';
 
 const PLAYER_TEAMS = {
   Adrian:  { name: 'Lakers',    abbrev: 'lal', color: '#552583' },
@@ -27,74 +14,66 @@ function logoUrl(abbrev) {
   return `https://a.espncdn.com/i/teamlogos/nba/500/${abbrev}.png`;
 }
 
-function getLinkId(linkField) {
-  if (!Array.isArray(linkField) || !linkField.length) return null;
-  const item = linkField[0];
-  return item.record_id || item.id;
-}
-
-async function getTenantToken() {
-  const r = await fetch('https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ app_id: APP_ID, app_secret: process.env.LARK_APP_SECRET }),
+async function getMatches() {
+  const r = await fetch(`https://api.github.com/repos/${REPO}/contents/data/matches.json`, {
+    headers: {
+      'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'User-Agent': '2k-standings',
+    },
   });
-  const d = await r.json();
-  return d.tenant_access_token;
-}
-
-async function larkGet(token, url) {
-  const r = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-  return r.json();
+  const meta = await r.json();
+  if (!meta.content) throw new Error(meta.message || 'Could not read matches from GitHub');
+  return JSON.parse(Buffer.from(meta.content, 'base64').toString());
 }
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   try {
-    const token = await getTenantToken();
+    const data = await getMatches();
+    const matches = data.matches || [];
 
-    const [playersRes, matchesRes] = await Promise.all([
-      larkGet(token, `https://open.larksuite.com/open-apis/bitable/v1/apps/${BASE_TOKEN}/tables/${PLAYERS_TABLE}/records?page_size=100`),
-      larkGet(token, `https://open.larksuite.com/open-apis/bitable/v1/apps/${BASE_TOKEN}/tables/${MATCHES_TABLE}/records?page_size=100`),
-    ]);
+    // Played matches sorted chronologically by ID
+    const played = matches
+      .filter(m => m.homeScore !== null && m.awayScore !== null)
+      .sort((a, b) => a.id.localeCompare(b.id));
 
-    const matchItems = matchesRes.data?.items || [];
-
-    // Compute per-player game history (chronological by record_id)
-    const playedMatches = matchItems
-      .filter(m => m.fields['Home Score'] != null && m.fields['Away Score'] != null)
-      .sort((a, b) => a.record_id.localeCompare(b.record_id));
-
+    // Per-player stats + history
+    const stats   = {};
     const history = {};
-    Object.values(PLAYERS_MAP).forEach(n => { history[n] = []; });
+    Object.keys(PLAYER_TEAMS).forEach(n => {
+      stats[n]   = { w: 0, l: 0, gp: 0, pd: 0 };
+      history[n] = [];
+    });
 
-    for (const m of playedMatches) {
-      const hs = Number(m.fields['Home Score']);
-      const as_ = Number(m.fields['Away Score']);
-      const homeName = PLAYERS_MAP[getLinkId(m.fields['Home'])];
-      const awayName = PLAYERS_MAP[getLinkId(m.fields['Away'])];
-      if (homeName) history[homeName].push(hs > as_ ? 'W' : 'L');
-      if (awayName) history[awayName].push(as_ > hs ? 'W' : 'L');
+    for (const m of played) {
+      const hs  = Number(m.homeScore);
+      const as_ = Number(m.awayScore);
+      const h   = m.home;
+      const a   = m.away;
+
+      if (stats[h]) {
+        stats[h].gp++;
+        stats[h].pd += (hs - as_);
+        if (hs > as_) { stats[h].w++; history[h].push('W'); }
+        else          { stats[h].l++; history[h].push('L'); }
+      }
+      if (stats[a]) {
+        stats[a].gp++;
+        stats[a].pd += (as_ - hs);
+        if (as_ > hs) { stats[a].w++; history[a].push('W'); }
+        else          { stats[a].l++; history[a].push('L'); }
+      }
     }
 
     // Build players array
-    const playerItems = playersRes.data?.items || [];
-    let players = playerItems.map(p => {
-      const rawName = p.fields['Name'] || '';
-      const name = rawName === 'Christian' ? 'Vieri' : rawName;
-      if (!name) return null;
+    let players = Object.keys(PLAYER_TEAMS).map(name => {
+      const s    = stats[name];
+      const team = PLAYER_TEAMS[name];
+      const hist = history[name];
+      const pct  = s.gp > 0 ? s.w / s.gp : 0;
 
-      const w   = Number(p.fields['W']  || 0);
-      const l   = Number(p.fields['L']  || 0);
-      const gp  = Number(p.fields['GP'] || 0);
-      const pd  = Number(p.fields['PD'] || 0);
-      const pct = gp > 0 ? w / gp : 0;
-
-      const team = PLAYER_TEAMS[name] || {};
-      const hist = history[name] || [];
-
-      // Streak
       let streak = '';
       if (hist.length) {
         const last = hist[hist.length - 1];
@@ -104,16 +83,15 @@ module.exports = async (req, res) => {
       }
 
       return {
-        id:     p.record_id,
         name,
-        w, l, gp, pd, pct,
-        color:  team.color  || '#334155',
-        logo:   team.abbrev ? logoUrl(team.abbrev) : '',
-        team:   team.name   || '',
+        w: s.w, l: s.l, gp: s.gp, pd: s.pd, pct,
+        color:  team.color,
+        logo:   logoUrl(team.abbrev),
+        team:   team.name,
         streak,
         last5:  hist.slice(-5),
       };
-    }).filter(Boolean);
+    });
 
     // Sort: win% desc, then PD desc
     players.sort((a, b) => b.pct - a.pct || b.pd - a.pd);
@@ -133,7 +111,6 @@ module.exports = async (req, res) => {
       };
     });
 
-    // Magic number: leader vs #2
     if (players.length >= 2) {
       const GAMES_PER_PLAYER = 12;
       const mn = Math.max(0, (GAMES_PER_PLAYER + 1) - players[0].w - players[1].l);

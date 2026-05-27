@@ -1,0 +1,11 @@
+{
+  "players": [
+    { "name": "Adrian",  "team": "Lakers",    "abbrev": "lal", "color": "#552583" },
+    { "name": "Rokhmad", "team": "Wolves",    "abbrev": "min", "color": "#0C2340" },
+    { "name": "Arga",    "team": "Cavaliers", "abbrev": "cle", "color": "#860038" },
+    { "name": "Vieri",   "team": "Spurs",     "abbrev": "sa",  "color": "#1a1a1a" },
+    { "name": "Yodha",   "team": "Celtics",   "abbrev": "bos", "color": "#007A33" },
+    { "name": "Azhar",   "team": "Thunder",   "abbrev": "okc", "color": "#007AC1" },
+    { "name": "Dhani",   "team": "Knicks",    "abbrev": "ny",  "color": "#F58426" }
+  ]
+}

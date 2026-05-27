@@ -1,30 +1,35 @@
-const BASE_TOKEN    = 'OaKybENNnaGWkIstbYplgvNBg5d';
-const PLAYERS_TABLE = 'tbl1d07ESYbMjgJ6';
-const APP_ID        = 'cli_aa9da0c31078ded1';
-
-async function getTenantToken() {
-  const r = await fetch('https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ app_id: APP_ID, app_secret: process.env.LARK_APP_SECRET }),
-  });
-  return r.json();
-}
+const REPO = 'adriansalim28/2k-standings';
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   try {
-    const authRes = await getTenantToken();
-    const token   = authRes.tenant_access_token;
+    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/data/matches.json`, {
+      headers: {
+        'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': '2k-standings',
+      },
+    });
+    const meta = await r.json();
+    const hasContent = !!meta.content;
+    let matchCount = 0, playedCount = 0;
 
-    const r = await fetch(
-      `https://open.larksuite.com/open-apis/bitable/v1/apps/${BASE_TOKEN}/tables/${PLAYERS_TABLE}/records?page_size=10`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    const raw = await r.json();
+    if (hasContent) {
+      const data = JSON.parse(Buffer.from(meta.content, 'base64').toString());
+      matchCount  = data.matches?.length ?? 0;
+      playedCount = data.matches?.filter(m => m.homeScore !== null).length ?? 0;
+    }
 
-    res.json({ authCode: authRes.code, authMsg: authRes.msg, hasToken: !!token, larkCode: raw.code, larkMsg: raw.msg, itemCount: raw.data?.items?.length ?? 'no data key', raw });
+    res.json({
+      ok:         true,
+      hasToken:   !!process.env.GITHUB_TOKEN,
+      fileFound:  hasContent,
+      matchCount,
+      playedCount,
+      sha:        meta.sha?.substring(0, 8) || null,
+      ghStatus:   r.status,
+    });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    res.status(500).json({ ok: false, error: e.message });
   }
 };
