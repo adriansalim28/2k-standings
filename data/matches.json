@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-05-27T17:34:34.050Z",
+  "updatedAt": "2026-05-27T17:35:11.676Z",
   "matches": [
     {
       "id": "G001",
@@ -168,8 +168,8 @@
       "leg": 1,
       "home": "Azhar",
       "away": "Dhani",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 58,
+      "awayScore": 48
     },
     {
       "id": "G022",
