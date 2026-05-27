@@ -1,6 +1,6 @@
 const BASE_TOKEN = 'OaKybENNnaGWkIstbYplgvNBg5d';
 const MATCHES_TABLE = 'tblwFOxYns6UTkZH';
-const APP_ID = 'cli_a941f51b31229ed3';
+const APP_ID = 'cli_aa9da0c31078ded1';
 
 const PLAYERS_MAP = {
   'recvkJoDKAOtBS': 'Adrian',
