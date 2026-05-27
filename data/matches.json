@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-05-27T17:57:57.373Z",
+  "updatedAt": "2026-05-27T17:58:10.594Z",
   "matches": [
     {
       "id": "G001",
@@ -9,7 +9,8 @@
       "home": "Adrian",
       "away": "Rokhmad",
       "homeScore": 60,
-      "awayScore": 54
+      "awayScore": 54,
+      "playedAt": "2026-05-27T17:58:10.594Z"
     },
     {
       "id": "G002",
