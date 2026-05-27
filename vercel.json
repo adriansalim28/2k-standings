@@ -3,6 +3,7 @@
   "routes": [
     { "src": "/api/standings", "dest": "/api/standings.js" },
     { "src": "/api/matches",   "dest": "/api/matches.js"   },
-    { "src": "/api/submit",    "dest": "/api/submit.js"    }
+    { "src": "/api/submit",    "dest": "/api/submit.js"    },
+    { "src": "/api/debug",     "dest": "/api/debug.js"     }
   ]
 }
