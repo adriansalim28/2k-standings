@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-05-27T17:41:01.383Z",
+  "updatedAt": "2026-05-27T17:57:12.061Z",
   "matches": [
     {
       "id": "G001",
@@ -41,7 +41,8 @@
       "home": "Adrian",
       "away": "Azhar",
       "homeScore": 71,
-      "awayScore": 80
+      "awayScore": 80,
+      "playedAt": "2026-05-27T17:57:12.061Z"
     },
     {
       "id": "G006",
