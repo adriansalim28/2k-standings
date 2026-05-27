@@ -170,6 +170,27 @@ body{background:#1D428A;min-height:100vh;font-family:-apple-system,BlinkMacSyste
 /* ── FOOTER ── */
 footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.12)}
 
+/* ── STATS PAGE ── */
+.stats-section{max-width:640px;margin:0 auto;padding:0 24px 24px}
+.stats-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+.stats-table th{font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:0 6px 10px;text-align:right;white-space:nowrap}
+.stats-table th:first-child{text-align:left;padding-left:0}
+.stats-table td{padding:10px 6px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;font-weight:700;color:rgba(255,255,255,0.85);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.stats-table td:first-child{text-align:left;padding-left:0;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:#fff}
+.stats-table tr:last-child td{border-bottom:none}
+.st-rank{display:inline-block;width:16px;height:16px;border-radius:2px;background:rgba(255,255,255,0.1);font-size:8px;font-weight:900;text-align:center;line-height:16px;margin-right:5px;vertical-align:middle}
+/* ── H2H ── */
+.h2h-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px}
+.h2h-table{border-collapse:collapse;font-size:11px}
+.h2h-col-head{font-size:8px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:0 4px 8px;text-align:center;min-width:44px}
+.h2h-row-head{font-size:9px;font-weight:900;text-transform:uppercase;color:rgba(255,255,255,0.5);padding:7px 14px 7px 0;white-space:nowrap;text-align:left}
+.h2h-cell{text-align:center;padding:6px 4px;font-weight:800;font-variant-numeric:tabular-nums;min-width:44px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.h2h-self{color:rgba(255,255,255,0.1)}
+.h2h-win{color:#4ade80}
+.h2h-loss{color:#f87171}
+.h2h-even{color:rgba(255,255,255,0.3)}
+.h2h-empty{color:rgba(255,255,255,0.12)}
+
 @media(max-width:500px){
   .header-title{font-size:36px}
   .rec-w,.rec-l{font-size:22px}
@@ -225,6 +246,17 @@ footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spaci
   </div>
 </div>
 
+<!-- ── STATS PAGE ── -->
+<div id="page-stats" class="page">
+  <div class="page-header">
+    <div class="page-title">Stats</div>
+    <div class="page-subtitle">Season 2026 · Advanced</div>
+  </div>
+  <div id="stats-wrap" class="stats-section">
+    <div class="loader">Loading…</div>
+  </div>
+</div>
+
 <!-- ── SCORE ENTRY MODAL ── -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
@@ -259,6 +291,9 @@ footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spaci
   <button class="nav-btn" id="nav-games" onclick="showPage('games')">
     <span class="nav-icon">🏀</span>Games
   </button>
+  <button class="nav-btn" id="nav-stats" onclick="showPage('stats')">
+    <span class="nav-icon">📊</span>Stats
+  </button>
 </nav>
 
 <script>
@@ -275,10 +310,12 @@ const PLAYER_TEAMS = {
 const AUTO_SPOTS   = 3;
 const PLAYIN_SPOTS = 5;
 
-let matchesData   = null;
-let currentRecord = null;
+let matchesData    = null;
+let standingsData  = null;
+let currentRecord  = null;
 let standingsLoaded = false;
 let gamesLoaded     = false;
+let statsLoaded     = false;
 
 // ── Navigation ────────────────────────────────────────────────────────────
 function showPage(name) {
@@ -288,6 +325,7 @@ function showPage(name) {
   document.getElementById('nav-' + name).classList.add('active');
   if (name === 'standings') loadStandings();
   if (name === 'games')     loadGames();
+  if (name === 'stats')     loadStats();
 }
 
 function switchGamesTab(tab) {
@@ -374,14 +412,19 @@ function resultCard(g) {
   </div>`;
 }
 
-function bracketHtml() {
+function bracketHtml(players) {
+  const p = players || [];
+  const name = (rank) => {
+    const pl = p.find(x => x.rank === rank);
+    return pl ? pl.name.toUpperCase() : 'TBD';
+  };
   const C  = 'rgba(255,255,255,0.22)';
   const CD = 'rgba(255,255,255,0.08)';
   const svgPI = `<svg width="20" height="206" style="display:block;flex-shrink:0"><line x1="0" y1="23" x2="0" y2="70" stroke="${C}" stroke-width="1.5"/><line x1="0" y1="46" x2="10" y2="46" stroke="${C}" stroke-width="1.5"/><line x1="10" y1="46" x2="10" y2="70" stroke="${C}" stroke-width="1.5"/><line x1="10" y1="70" x2="20" y2="70" stroke="${C}" stroke-width="1.5"/><line x1="12" y1="23" x2="20" y2="23" stroke="${CD}" stroke-width="1.5" stroke-dasharray="4,3"/></svg>`;
   const svgSF = `<svg width="20" height="206" style="display:block;flex-shrink:0"><line x1="0" y1="23" x2="0" y2="70" stroke="${C}" stroke-width="1.5"/><line x1="0" y1="46" x2="10" y2="46" stroke="${C}" stroke-width="1.5"/><line x1="0" y1="136" x2="0" y2="183" stroke="${C}" stroke-width="1.5"/><line x1="0" y1="160" x2="10" y2="160" stroke="${C}" stroke-width="1.5"/><line x1="10" y1="46" x2="10" y2="160" stroke="${C}" stroke-width="1.5"/><line x1="10" y1="103" x2="20" y2="103" stroke="${C}" stroke-width="1.5"/></svg>`;
   const svgFC = `<svg width="20" height="206" style="display:block;flex-shrink:0"><line x1="0" y1="80" x2="0" y2="127" stroke="${C}" stroke-width="1.5"/><line x1="0" y1="103" x2="20" y2="103" stroke="${C}" stroke-width="1.5"/></svg>`;
   return `<div class="brk-section">
-  <div class="section-label" style="margin-left:0">Playoff Bracket</div>
+  <div class="section-label" style="margin-left:0">Playoff Picture</div>
   <div class="brk-outer">
     <div class="brk-header-row">
       <div style="flex:0 0 130px;text-align:center">Play-In</div><div style="flex:0 0 20px"></div>
@@ -390,9 +433,9 @@ function bracketHtml() {
       <div style="flex:0 0 60px;text-align:center">Champion</div>
     </div>
     <div class="brk-body-row">
-      <div style="flex:0 0 130px"><div class="brk-matchup"><div class="brk-slot"><span class="brk-seed">#4</span><span class="brk-tname">TBD</span></div><div class="brk-divider"></div><div class="brk-slot"><span class="brk-seed">#5</span><span class="brk-tname">TBD</span></div></div></div>
+      <div style="flex:0 0 130px"><div class="brk-matchup"><div class="brk-slot"><span class="brk-seed">#4</span><span class="brk-tname">${name(4)}</span></div><div class="brk-divider"></div><div class="brk-slot"><span class="brk-seed">#5</span><span class="brk-tname">${name(5)}</span></div></div></div>
       <div style="flex:0 0 20px">${svgPI}</div>
-      <div style="flex:0 0 130px"><div class="brk-matchup"><div class="brk-slot"><span class="brk-seed">#1</span><span class="brk-tname">TBD</span></div><div class="brk-divider"></div><div class="brk-slot"><span class="brk-seed">W</span><span class="brk-tname">Play-In W</span></div></div><div style="height:20px"></div><div class="brk-matchup"><div class="brk-slot"><span class="brk-seed">#2</span><span class="brk-tname">TBD</span></div><div class="brk-divider"></div><div class="brk-slot"><span class="brk-seed">#3</span><span class="brk-tname">TBD</span></div></div></div>
+      <div style="flex:0 0 130px"><div class="brk-matchup"><div class="brk-slot"><span class="brk-seed">#1</span><span class="brk-tname">${name(1)}</span></div><div class="brk-divider"></div><div class="brk-slot"><span class="brk-seed">W</span><span class="brk-tname">Play-In W</span></div></div><div style="height:20px"></div><div class="brk-matchup"><div class="brk-slot"><span class="brk-seed">#2</span><span class="brk-tname">${name(2)}</span></div><div class="brk-divider"></div><div class="brk-slot"><span class="brk-seed">#3</span><span class="brk-tname">${name(3)}</span></div></div></div>
       <div style="flex:0 0 20px">${svgSF}</div>
       <div style="flex:0 0 130px"><div style="height:57px"></div><div class="brk-matchup"><div class="brk-slot"><span class="brk-seed">—</span><span class="brk-tname">TBD</span></div><div class="brk-divider"></div><div class="brk-slot"><span class="brk-seed">—</span><span class="brk-tname">TBD</span></div></div></div>
       <div style="flex:0 0 20px">${svgFC}</div>
@@ -414,7 +457,8 @@ async function loadStandings(force) {
     const [standData, matchData] = await Promise.all([standRes.json(), matchRes.json()]);
     if (!standData.ok) throw new Error(standData.error);
 
-    matchesData = matchData.ok ? matchData : null;
+    matchesData   = matchData.ok ? matchData : null;
+    standingsData = standData.players;
 
     const players = standData.players;
     const now = new Date();
@@ -446,7 +490,7 @@ async function loadStandings(force) {
       </div>
       <div class="section-label">Recent Results</div>
       <div class="results-zone">${recentHtml}</div>
-      ${bracketHtml()}
+      ${bracketHtml(players)}
     `;
 
     document.getElementById('standings-footer').textContent = `2K Season 2026 · ${fmt}`;
@@ -591,9 +635,11 @@ async function submitScore() {
     showToast(`${winner} wins! ${big}–${small} 🏆`);
 
     // Refresh everything
-    matchesData   = null;
-    gamesLoaded   = false;
+    matchesData    = null;
+    standingsData  = null;
+    gamesLoaded    = false;
     standingsLoaded = false;
+    statsLoaded    = false;
     loadStandings(true);
     if (document.getElementById('page-games').classList.contains('active')) {
       loadGames(true);
@@ -603,6 +649,83 @@ async function submitScore() {
     btn.disabled = false;
     btn.textContent = 'Submit';
   }
+}
+
+// ── Stats ──────────────────────────────────────────────────────────────────
+async function loadStats(force) {
+  if (statsLoaded && !force) return;
+  const el = document.getElementById('stats-wrap');
+  if (standingsData) { renderStats(standingsData); statsLoaded = true; return; }
+  el.innerHTML = '<div class="loader">Loading…</div>';
+  try {
+    const res  = await fetch('/api/standings');
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error);
+    standingsData = data.players;
+    renderStats(standingsData);
+    statsLoaded = true;
+  } catch (e) {
+    el.innerHTML = '<div class="empty">Failed to load stats.</div>';
+  }
+}
+
+function renderStats(players) {
+  const el = document.getElementById('stats-wrap');
+  if (!players || !players.length) {
+    el.innerHTML = '<div class="empty">No data yet</div>';
+    return;
+  }
+
+  // ── Season Averages table ──
+  const tableRows = players.map(p => {
+    const ppg = p.ppg    != null ? p.ppg.toFixed(1)    : '—';
+    const opp = p.oppPpg != null ? p.oppPpg.toFixed(1) : '—';
+    const hw  = p.homeW + '–' + p.homeL;
+    const aw  = p.awayW + '–' + p.awayL;
+    const bw  = p.biggestWin != null ? '+' + p.biggestWin : '—';
+    return `<tr>
+      <td><span class="st-rank">${p.rank}</span>${p.name.toUpperCase()}</td>
+      <td>${ppg}</td><td>${opp}</td><td>${hw}</td><td>${aw}</td><td>${bw}</td>
+    </tr>`;
+  }).join('');
+
+  const tableHtml = `
+    <table class="stats-table">
+      <thead><tr>
+        <th>Player</th><th>PPG</th><th>Opp PPG</th><th>Home</th><th>Away</th><th>Best W</th>
+      </tr></thead>
+      <tbody>${tableRows}</tbody>
+    </table>`;
+
+  // ── H2H matrix ──
+  const names = players.map(p => p.name);
+  const colHeads = names.map(n => `<th class="h2h-col-head">${n.substring(0,3).toUpperCase()}</th>`).join('');
+
+  const bodyRows = players.map(p => {
+    const cells = names.map(opp => {
+      if (opp === p.name) return `<td class="h2h-cell h2h-self">—</td>`;
+      const rec = p.h2h?.[opp];
+      if (!rec || (rec.w === 0 && rec.l === 0)) return `<td class="h2h-cell h2h-empty">0–0</td>`;
+      const cls = rec.w > rec.l ? 'h2h-win' : rec.w < rec.l ? 'h2h-loss' : 'h2h-even';
+      return `<td class="h2h-cell ${cls}">${rec.w}–${rec.l}</td>`;
+    }).join('');
+    return `<tr><td class="h2h-row-head">${p.name.toUpperCase()}</td>${cells}</tr>`;
+  }).join('');
+
+  const h2hHtml = `
+    <div class="h2h-wrap">
+      <table class="h2h-table">
+        <thead><tr><th class="h2h-row-head"></th>${colHeads}</tr></thead>
+        <tbody>${bodyRows}</tbody>
+      </table>
+    </div>`;
+
+  el.innerHTML = `
+    <div class="section-label" style="margin-left:0">Season Averages</div>
+    ${tableHtml}
+    <div class="section-label" style="margin-left:0;margin-top:24px">Head-to-Head</div>
+    ${h2hHtml}
+  `;
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────

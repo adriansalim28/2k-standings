@@ -42,9 +42,11 @@ module.exports = async (req, res) => {
     // Per-player stats + history
     const stats   = {};
     const history = {};
+    const h2h     = {};
     Object.keys(PLAYER_TEAMS).forEach(n => {
-      stats[n]   = { w: 0, l: 0, gp: 0, pd: 0 };
+      stats[n]   = { w: 0, l: 0, gp: 0, pd: 0, ptsFor: 0, ptsAg: 0, homeW: 0, homeL: 0, awayW: 0, awayL: 0, biggestWin: null };
       history[n] = [];
+      h2h[n]     = {};
     });
 
     for (const m of played) {
@@ -53,17 +55,44 @@ module.exports = async (req, res) => {
       const h   = m.home;
       const a   = m.away;
 
+      if (!h2h[h]) h2h[h] = {};
+      if (!h2h[a]) h2h[a] = {};
+      if (!h2h[h][a]) h2h[h][a] = { w: 0, l: 0 };
+      if (!h2h[a][h]) h2h[a][h] = { w: 0, l: 0 };
+
       if (stats[h]) {
         stats[h].gp++;
-        stats[h].pd += (hs - as_);
-        if (hs > as_) { stats[h].w++; history[h].push('W'); }
-        else          { stats[h].l++; history[h].push('L'); }
+        stats[h].ptsFor += hs;
+        stats[h].ptsAg  += as_;
+        stats[h].pd     += (hs - as_);
+        if (hs > as_) {
+          stats[h].w++; stats[h].homeW++;
+          history[h].push('W');
+          h2h[h][a].w++;
+          const mg = hs - as_;
+          if (stats[h].biggestWin === null || mg > stats[h].biggestWin) stats[h].biggestWin = mg;
+        } else {
+          stats[h].l++; stats[h].homeL++;
+          history[h].push('L');
+          h2h[h][a].l++;
+        }
       }
       if (stats[a]) {
         stats[a].gp++;
-        stats[a].pd += (as_ - hs);
-        if (as_ > hs) { stats[a].w++; history[a].push('W'); }
-        else          { stats[a].l++; history[a].push('L'); }
+        stats[a].ptsFor += as_;
+        stats[a].ptsAg  += hs;
+        stats[a].pd     += (as_ - hs);
+        if (as_ > hs) {
+          stats[a].w++; stats[a].awayW++;
+          history[a].push('W');
+          h2h[a][h].w++;
+          const mg = as_ - hs;
+          if (stats[a].biggestWin === null || mg > stats[a].biggestWin) stats[a].biggestWin = mg;
+        } else {
+          stats[a].l++; stats[a].awayL++;
+          history[a].push('L');
+          h2h[a][h].l++;
+        }
       }
     }
 
@@ -89,7 +118,13 @@ module.exports = async (req, res) => {
         logo:   logoUrl(team.abbrev),
         team:   team.name,
         streak,
-        last5:  hist.slice(-5),
+        last5:      hist.slice(-5),
+        ppg:        s.gp > 0 ? Math.round(s.ptsFor / s.gp * 10) / 10 : null,
+        oppPpg:     s.gp > 0 ? Math.round(s.ptsAg  / s.gp * 10) / 10 : null,
+        homeW: s.homeW, homeL: s.homeL,
+        awayW: s.awayW, awayL: s.awayL,
+        biggestWin: s.biggestWin,
+        h2h:        h2h[name] || {},
       };
     });
 
