@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-05-27T17:59:02.876Z",
+  "updatedAt": "2026-05-27T17:59:07.943Z",
   "matches": [
     {
       "id": "G001",
@@ -109,7 +109,8 @@
       "home": "Arga",
       "away": "Yodha",
       "homeScore": 70,
-      "awayScore": 48
+      "awayScore": 48,
+      "playedAt": "2026-05-27T17:59:07.943Z"
     },
     {
       "id": "G014",
