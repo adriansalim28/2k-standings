@@ -1,15 +1,15 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-05-27T17:36:07.374Z",
+  "updatedAt": "2026-05-27T17:36:59.708Z",
   "matches": [
     {
       "id": "G001",
       "leg": 1,
       "home": "Adrian",
       "away": "Rokhmad",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 60,
+      "awayScore": 54
     },
     {
       "id": "G002",
