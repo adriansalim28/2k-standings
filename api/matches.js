@@ -52,11 +52,18 @@ module.exports = async (req, res) => {
         awayColor: awayTeam.color || '#334155',
         homeLogo:  homeTeam.abbrev ? logoUrl(homeTeam.abbrev) : '',
         awayLogo:  awayTeam.abbrev ? logoUrl(awayTeam.abbrev) : '',
+        playedAt:  m.playedAt || null,
         played,
       };
     });
 
-    const played   = matches.filter(m => m.played).sort((a, b) => b.gameId.localeCompare(a.gameId));
+    const played   = matches.filter(m => m.played).sort((a, b) => {
+      // Sort by playedAt timestamp desc (new games first); fallback to gameId for legacy data
+      if (a.playedAt && b.playedAt) return b.playedAt.localeCompare(a.playedAt);
+      if (a.playedAt) return -1;
+      if (b.playedAt) return 1;
+      return b.gameId.localeCompare(a.gameId);
+    });
     const upcoming = matches.filter(m => !m.played).sort((a, b) => a.gameId.localeCompare(b.gameId));
 
     res.json({ ok: true, played, upcoming });

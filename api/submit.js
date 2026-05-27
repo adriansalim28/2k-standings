@@ -50,6 +50,7 @@ module.exports = async (req, res) => {
 
     data.matches[idx].homeScore = hs;
     data.matches[idx].awayScore = as_;
+    data.matches[idx].playedAt = new Date().toISOString();
     data.updatedAt = new Date().toISOString();
 
     // 3. Commit back to GitHub
