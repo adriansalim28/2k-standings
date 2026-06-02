@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-06-02T12:32:48.087Z",
+  "updatedAt": "2026-06-02T13:03:02.809Z",
   "matches": [
     {
       "id": "G001",
@@ -127,8 +127,9 @@
       "leg": 1,
       "home": "Arga",
       "away": "Dhani",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 65,
+      "awayScore": 43,
+      "playedAt": "2026-06-02T13:03:02.809Z"
     },
     {
       "id": "G016",
