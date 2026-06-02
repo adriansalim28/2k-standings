@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-06-02T13:30:22.933Z",
+  "updatedAt": "2026-06-02T13:58:35.855Z",
   "matches": [
     {
       "id": "G001",
@@ -152,8 +152,9 @@
       "leg": 1,
       "home": "Vieri",
       "away": "Dhani",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 68,
+      "awayScore": 35,
+      "playedAt": "2026-06-02T13:58:35.855Z"
     },
     {
       "id": "G019",
