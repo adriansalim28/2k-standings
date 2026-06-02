@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-06-02T14:25:52.341Z",
+  "updatedAt": "2026-06-02T14:52:28.219Z",
   "matches": [
     {
       "id": "G001",
@@ -280,8 +280,9 @@
       "leg": 2,
       "home": "Vieri",
       "away": "Arga",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 49,
+      "awayScore": 42,
+      "playedAt": "2026-06-02T14:52:28.219Z"
     },
     {
       "id": "G034",
