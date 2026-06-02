@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-06-02T11:59:21.503Z",
+  "updatedAt": "2026-06-02T12:32:48.087Z",
   "matches": [
     {
       "id": "G001",
@@ -227,8 +227,9 @@
       "leg": 2,
       "home": "Dhani",
       "away": "Adrian",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 47,
+      "awayScore": 60,
+      "playedAt": "2026-06-02T12:32:48.087Z"
     },
     {
       "id": "G028",
