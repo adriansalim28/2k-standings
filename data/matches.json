@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-06-05T12:45:37.810Z",
+  "updatedAt": "2026-06-05T13:40:03.920Z",
   "matches": [
     {
       "id": "G001",
@@ -35,8 +35,9 @@
       "leg": 1,
       "home": "Adrian",
       "away": "Yodha",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 56,
+      "awayScore": 67,
+      "playedAt": "2026-06-05T13:40:03.920Z"
     },
     {
       "id": "G005",
