@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-06-05T13:40:03.920Z",
+  "updatedAt": "2026-06-05T14:05:58.320Z",
   "matches": [
     {
       "id": "G001",
@@ -139,8 +139,9 @@
       "leg": 1,
       "home": "Vieri",
       "away": "Yodha",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 51,
+      "awayScore": 55,
+      "playedAt": "2026-06-05T14:05:58.320Z"
     },
     {
       "id": "G017",
