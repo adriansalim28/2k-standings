@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-06-08T13:31:15.888Z",
+  "updatedAt": "2026-06-08T14:04:50.648Z",
   "matches": [
     {
       "id": "G001",
@@ -263,8 +263,9 @@
       "leg": 2,
       "home": "Yodha",
       "away": "Rokhmad",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 73,
+      "awayScore": 60,
+      "playedAt": "2026-06-08T14:04:50.648Z"
     },
     {
       "id": "G031",
