@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-06-08T14:04:50.648Z",
+  "updatedAt": "2026-06-09T13:06:41.612Z",
   "matches": [
     {
       "id": "G001",
@@ -71,8 +71,9 @@
       "leg": 1,
       "home": "Rokhmad",
       "away": "Vieri",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 43,
+      "awayScore": 64,
+      "playedAt": "2026-06-09T13:06:41.612Z"
     },
     {
       "id": "G009",
