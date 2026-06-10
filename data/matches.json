@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-06-10T14:33:42.852Z",
+  "updatedAt": "2026-06-10T15:03:35.536Z",
   "matches": [
     {
       "id": "G001",
@@ -151,8 +151,9 @@
       "leg": 1,
       "home": "Vieri",
       "away": "Azhar",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 49,
+      "awayScore": 45,
+      "playedAt": "2026-06-10T15:03:35.536Z"
     },
     {
       "id": "G018",
