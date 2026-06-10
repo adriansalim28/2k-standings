@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-06-10T14:04:54.381Z",
+  "updatedAt": "2026-06-10T14:33:42.852Z",
   "matches": [
     {
       "id": "G001",
@@ -354,8 +354,9 @@
       "leg": 2,
       "home": "Azhar",
       "away": "Yodha",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 51,
+      "awayScore": 44,
+      "playedAt": "2026-06-10T14:33:42.852Z"
     },
     {
       "id": "G041",
