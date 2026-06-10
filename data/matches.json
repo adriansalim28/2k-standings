@@ -1,7 +1,7 @@
 {
   "season": 1,
   "year": 2026,
-  "updatedAt": "2026-06-10T13:37:38.110Z",
+  "updatedAt": "2026-06-10T14:04:54.381Z",
   "matches": [
     {
       "id": "G001",
@@ -97,8 +97,9 @@
       "leg": 1,
       "home": "Rokhmad",
       "away": "Dhani",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 50,
+      "awayScore": 69,
+      "playedAt": "2026-06-10T14:04:54.381Z"
     },
     {
       "id": "G012",
