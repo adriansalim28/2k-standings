@@ -194,7 +194,43 @@ footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spaci
 .h2h-even{color:rgba(255,255,255,0.3)}
 .h2h-empty{color:rgba(255,255,255,0.12)}
 
-/* ── PLAYOFFS PAGE ── */
+/* ── PLAYOFFS PAGE — poster-style silver background ── */
+#page-playoffs.active{
+  background:linear-gradient(160deg,#c9d0da 0%,#b0bac8 35%,#a8b3c2 60%,#bcc4d0 100%);
+  min-height:100vh;
+  margin:0 -16px;padding:0 16px;
+}
+@media(min-width:501px){#page-playoffs.active{margin:0;padding:0}}
+#page-playoffs .page-header{display:none}
+/* Poster header */
+.po-page-header{background:#0d1117;padding:22px 28px 20px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;margin:0 -16px}
+@media(min-width:501px){.po-page-header{margin:0}}
+.po-page-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#552583,#FDB927,#860038,#C4CED4,#007AC1,#EF3B24)}
+.po-tag{font-size:9px;font-weight:900;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:5px}
+.po-tournament-title{font-family:'Bebas Neue',-apple-system,sans-serif;font-size:38px;letter-spacing:3px;color:#fff;line-height:1}
+.po-page-sub{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px}
+.po-date-badge{background:#B8960C;padding:9px 15px;text-align:center;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+.po-date-label{font-size:8px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:rgba(0,0,0,0.55)}
+.po-date-val{font-family:'Bebas Neue',-apple-system,sans-serif;font-size:24px;letter-spacing:2px;color:#000;line-height:1.1;margin-top:1px}
+/* Standings section embedded at bottom of playoffs page */
+.po-mini-standings{background:#0d1117;border-radius:4px;overflow:hidden;margin-top:18px;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+.po-mini-st-header{background:#080c12;padding:10px 22px;font-size:8px;font-weight:900;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.3);display:flex;justify-content:space-between;align-items:center}
+.po-mini-st-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.04)}
+.po-mini-st-row{background:#0d1117;display:flex;align-items:center;gap:9px;padding:9px 14px}
+.po-mini-st-seed{font-size:11px;font-weight:900;color:rgba(255,255,255,0.22);width:14px;flex-shrink:0}
+.po-mini-st-logo{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+.po-mini-st-logo img{width:18px;height:18px;object-fit:contain}
+.po-mini-st-name{font-size:13px;font-weight:900;color:#fff;flex:1;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.po-mini-st-rec{font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);font-variant-numeric:tabular-nums;white-space:nowrap}
+.po-mini-st-tag{font-size:7px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border-radius:2px;flex-shrink:0;white-space:nowrap}
+.po-mini-st-tag.auto{background:rgba(200,16,46,0.2);color:#e8526a;border:1px solid rgba(200,16,46,0.3)}
+.po-mini-st-tag.pi{background:rgba(247,201,72,0.15);color:#F7C948;border:1px solid rgba(247,201,72,0.3)}
+.po-mini-st-tag.elim{background:transparent;color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.08)}
+/* Light-bg pill text needs adjustment on silver background */
+#page-playoffs .po-pill.playin{background:#0d1117;color:#F7C948}
+#page-playoffs .po-pill.semis{background:#0d1117;color:#C8102E}
+#page-playoffs .po-pill.final{background:#0d1117;color:#F7C948}
+#page-playoffs .po-rule{background:rgba(0,0,0,0.15)}
 .po-wrap{max-width:640px;margin:0 auto;padding:4px 24px 24px}
 .po-section-divider{display:flex;align-items:center;gap:10px;margin:18px 0 12px}
 .po-pill{font-size:9px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:5px 14px;white-space:nowrap}
@@ -319,9 +355,16 @@ footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spaci
 
 <!-- ── PLAYOFFS PAGE ── -->
 <div id="page-playoffs" class="page">
-  <div class="page-header">
-    <div class="page-title">Playoffs</div>
-    <div class="page-subtitle">Season 2026 · Best of 7</div>
+  <div class="po-page-header">
+    <div>
+      <div class="po-tag">Season 2026</div>
+      <div class="po-tournament-title">2K TOURNAMENT</div>
+      <div class="po-page-sub">Playoff Schedule Update</div>
+    </div>
+    <div class="po-date-badge" id="po-date-badge">
+      <div class="po-date-label">Tomorrow</div>
+      <div class="po-date-val">JUN 19</div>
+    </div>
   </div>
   <div id="playoffs-wrap" class="po-wrap">
     <div class="loader">Loading playoffs…</div>
@@ -842,15 +885,48 @@ async function loadPlayoffs(force) {
   if (playoffsLoaded && !force) return;
   document.getElementById('playoffs-wrap').innerHTML = '<div class="loader">Loading playoffs…</div>';
   try {
-    const res  = await fetch('/api/playoffs');
-    const data = await res.json();
-    if (!data.ok) throw new Error(data.error);
-    playoffsData = data.series;
+    // Fetch playoffs + standings in parallel (standings needed for mini-table)
+    const [poRes, stRes] = await Promise.all([
+      fetch('/api/playoffs'),
+      standingsData ? Promise.resolve(null) : fetch('/api/standings'),
+    ]);
+    const poData = await poRes.json();
+    if (!poData.ok) throw new Error(poData.error);
+    if (stRes) {
+      const stData = await stRes.json();
+      if (stData.ok) standingsData = stData.players;
+    }
+    playoffsData = poData.series;
+    updateDateBadge();
     renderPlayoffs();
     playoffsLoaded = true;
   } catch (e) {
     document.getElementById('playoffs-wrap').innerHTML = '<div class="empty">Failed to load playoffs.<br><br>Check connection and retry.</div>';
   }
+}
+
+function updateDateBadge() {
+  // Find next active series; pull date heuristically from latest playedAt + 1 day
+  const el = document.getElementById('po-date-badge');
+  if (!el) return;
+  const active = (playoffsData || []).find(s => s.status === 'active' || s.status === 'upcoming');
+  let label = 'Up Next', dateStr;
+  const tz = 'Asia/Jakarta';
+  if (active && active.games && active.games.length) {
+    const last = active.games[active.games.length - 1];
+    if (last.playedAt) {
+      const d = new Date(last.playedAt);
+      d.setDate(d.getDate() + 1);
+      dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: tz }).toUpperCase();
+      label = 'Tomorrow';
+    }
+  }
+  if (!dateStr) {
+    const d = new Date();
+    dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: tz }).toUpperCase();
+    label = 'Today';
+  }
+  el.innerHTML = `<div class="po-date-label">${label}</div><div class="po-date-val">${dateStr}</div>`;
 }
 
 function renderPlayoffs() {
@@ -874,7 +950,29 @@ function renderPlayoffs() {
     html += `<div class="po-section-divider"><div class="po-pill final">Final · Championship</div><div class="po-rule"></div></div>`;
     html += rounds['final'].map(renderSeriesCard).join('');
   }
+
+  // Embedded standings (matches poster bottom section)
+  html += renderMiniStandings();
+
   wrap.innerHTML = html;
+}
+
+function renderMiniStandings() {
+  if (!standingsData || !standingsData.length) return '';
+  const tagFor = (rank) => rank <= 3 ? 'auto' : rank <= 5 ? 'pi' : 'elim';
+  const tagText = (rank) => rank <= 3 ? 'AUTO' : rank <= 5 ? 'PLAY-IN' : 'ELIM';
+  const rows = standingsData.map(p => `
+    <div class="po-mini-st-row">
+      <span class="po-mini-st-seed">${p.rank}</span>
+      <div class="po-mini-st-logo" style="background:${p.color}"><img src="${p.logo}" alt=""></div>
+      <span class="po-mini-st-name">${p.name}</span>
+      <span class="po-mini-st-rec">${p.w}–${p.l}</span>
+      <span class="po-mini-st-tag ${tagFor(p.rank)}">${tagText(p.rank)}</span>
+    </div>`).join('');
+  return `<div class="po-mini-standings">
+    <div class="po-mini-st-header"><span>Regular Season Standings</span><span style="opacity:0.6">W – L</span></div>
+    <div class="po-mini-st-grid">${rows}</div>
+  </div>`;
 }
 
 function renderSeriesCard(s) {
