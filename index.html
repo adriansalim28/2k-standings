@@ -203,7 +203,7 @@ footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spaci
 @media(min-width:501px){#page-playoffs.active{margin:0;padding:0}}
 #page-playoffs .page-header{display:none}
 /* Poster header */
-.po-page-header{background:#0d1117;padding:22px 28px 20px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;margin:0 -16px}
+.po-page-header{background:#0d1117;padding:calc(22px + env(safe-area-inset-top)) 28px 20px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;margin:0 -16px}
 @media(min-width:501px){.po-page-header{margin:0}}
 .po-page-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#552583,#FDB927,#860038,#C4CED4,#007AC1,#EF3B24)}
 .po-tag{font-size:9px;font-weight:900;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:5px}
@@ -300,7 +300,7 @@ footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spaci
 
 /* Mobile — playoffs page tighter layout */
 @media(max-width:500px){
-  .po-page-header{padding:18px 16px 16px}
+  .po-page-header{padding:calc(18px + env(safe-area-inset-top)) 16px 16px}
   .po-tournament-title{font-size:30px;letter-spacing:2px}
   .po-page-sub{font-size:9px;letter-spacing:2px}
   .po-tag{font-size:8px;letter-spacing:3px}
@@ -315,7 +315,7 @@ footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spaci
   .po-tile img{width:32px;height:32px}
   .po-tile.tbd .tbd-mark{font-size:14px}
   .po-tile-row{gap:8px}
-  .po-tname{font-size:16px;letter-spacing:.3px}
+  .po-tname{font-size:15px;letter-spacing:0}
   .po-city{font-size:7px;letter-spacing:1px}
   .po-pname{font-size:11px}
   .po-seedchip{font-size:8px;padding:1px 4px}
@@ -1034,8 +1034,9 @@ function playerStatsLine(playerName) {
   const p = standingsData.find(x => x.name === playerName);
   if (!p || !p.gp) return '';
   const pdLbl = (p.pd > 0 ? '+' : '') + p.pd;
-  const ppg = p.ppg != null ? p.ppg.toFixed(1) + ' PPG' : '';
-  return `${p.w}-${p.l}${ppg ? ' · ' + ppg : ''} · ${pdLbl} PD`;
+  // Compact: "W-L · PPG · ±PD" — no labels, fits on mobile
+  const ppg = p.ppg != null ? ' · ' + p.ppg.toFixed(1) : '';
+  return `${p.w}-${p.l}${ppg} · ${pdLbl}`;
 }
 
 function renderSeriesCard(s) {
@@ -1065,15 +1066,13 @@ function renderSeriesCard(s) {
        <div class="po-tname">${s.home.team || s.home.player}</div>
        <div class="po-prow">${s.home.seed ? `<span class="po-seedchip">#${s.home.seed}</span>`:''}<span class="po-pname">${s.home.player}</span></div>
        ${homeStats ? `<div class="po-stats">${homeStats}</div>` : ''}`
-    : `<div class="po-tname" style="color:rgba(255,255,255,0.22);margin-top:4px">TBD</div>
-       <div class="po-prow"><span class="po-pname" style="color:rgba(255,255,255,0.3);font-size:9px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap">Awaiting ${s.awaitingFrom==='play-in'?'Play-In':s.awaitingFrom==='semis'?'Semis':''}</span></div>`;
+    : `<div class="po-tname" style="color:rgba(255,255,255,0.22);margin-top:6px">TBD</div>`;
   const awayInfo = s.away
     ? `<div class="po-city">${awayCity}</div>
        <div class="po-tname">${s.away.team || s.away.player}</div>
        <div class="po-prow"><span class="po-pname">${s.away.player}</span>${s.away.seed ? `<span class="po-seedchip">#${s.away.seed}</span>`:''}</div>
        ${awayStats ? `<div class="po-stats">${awayStats}</div>` : ''}`
-    : `<div class="po-tname" style="color:rgba(255,255,255,0.22);margin-top:4px">TBD</div>
-       <div class="po-prow"><span class="po-pname" style="color:rgba(255,255,255,0.3);font-size:9px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap">Awaiting ${s.awaitingFrom==='play-in'?'Play-In':s.awaitingFrom==='semis'?'Semis':''}</span></div>`;
+    : `<div class="po-tname" style="color:rgba(255,255,255,0.22);margin-top:6px">TBD</div>`;
 
   // Center: score or BYE
   let centerHtml;
