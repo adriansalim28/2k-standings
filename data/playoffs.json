@@ -1,0 +1,53 @@
+{
+  "season": 2026,
+  "format": "BO7",
+  "updated": "2026-06-18T00:00:00+07:00",
+  "series": [
+    {
+      "id": "play-in",
+      "label": "Play-In Tournament",
+      "round": "play-in",
+      "order": 1,
+      "home": { "player": "Adrian", "seed": 4 },
+      "away": { "player": "Yodha", "seed": 5 },
+      "advancesTo": { "series": "semis-2", "slot": "away" },
+      "games": [
+        { "g": 1, "homeScore": null, "awayScore": null, "winner": "away", "playedAt": "2026-06-17" },
+        { "g": 2, "homeScore": null, "awayScore": null, "winner": "home", "playedAt": "2026-06-17" },
+        { "g": 3, "homeScore": null, "awayScore": null, "winner": "home", "playedAt": "2026-06-17" },
+        { "g": 4, "homeScore": null, "awayScore": null, "winner": "home", "playedAt": "2026-06-18" }
+      ]
+    },
+    {
+      "id": "semis-1",
+      "label": "Semifinals",
+      "round": "semis",
+      "order": 2,
+      "home": { "player": "Arga", "seed": 2 },
+      "away": { "player": "Vieri", "seed": 3 },
+      "advancesTo": { "series": "final", "slot": "home" },
+      "games": []
+    },
+    {
+      "id": "semis-2",
+      "label": "Semifinals",
+      "round": "semis",
+      "order": 3,
+      "home": { "player": "Azhar", "seed": 1 },
+      "away": null,
+      "awaitingFrom": "play-in",
+      "advancesTo": { "series": "final", "slot": "away" },
+      "games": []
+    },
+    {
+      "id": "final",
+      "label": "Final",
+      "round": "final",
+      "order": 4,
+      "home": null,
+      "away": null,
+      "awaitingFrom": "semis",
+      "games": []
+    }
+  ]
+}

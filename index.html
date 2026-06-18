@@ -9,6 +9,7 @@
 <meta name="theme-color" content="#1D428A"/>
 <link rel="manifest" href="/manifest.json"/>
 <link rel="apple-touch-icon" href="/icon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"/>
 <title>2K Season 2026</title>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -193,6 +194,73 @@ footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spaci
 .h2h-even{color:rgba(255,255,255,0.3)}
 .h2h-empty{color:rgba(255,255,255,0.12)}
 
+/* ── PLAYOFFS PAGE ── */
+.po-wrap{max-width:640px;margin:0 auto;padding:4px 24px 24px}
+.po-section-divider{display:flex;align-items:center;gap:10px;margin:18px 0 12px}
+.po-pill{font-size:9px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:5px 14px;white-space:nowrap}
+.po-pill.playin{background:rgba(247,201,72,0.1);color:#F7C948;border:1.5px solid #F7C948}
+.po-pill.semis {background:rgba(200,16,46,0.1); color:#C8102E;border:1.5px solid #C8102E}
+.po-pill.final {background:rgba(247,201,72,0.1);color:#F7C948;border:1.5px solid #F7C948}
+.po-rule{flex:1;height:2px;background:rgba(255,255,255,0.08)}
+.po-card{background:#0d1117;border-radius:6px;overflow:hidden;margin-bottom:10px;box-shadow:0 4px 20px rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.04)}
+.po-card-inner{padding:20px 20px 16px;position:relative}
+.po-card-inner::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--wash-l) 0%,transparent 45%);pointer-events:none}
+.po-card-inner::after{content:'';position:absolute;inset:0;background:linear-gradient(to left,var(--wash-r) 0%,transparent 45%);pointer-events:none}
+.po-teams{display:flex;align-items:center;position:relative;z-index:1}
+.po-team{flex:1;display:flex;flex-direction:column;min-width:0}
+.po-team.away{align-items:flex-end}
+.po-tile-row{display:flex;align-items:center;gap:11px;min-width:0;width:100%}
+.po-team.away .po-tile-row{flex-direction:row-reverse}
+.po-tile{width:60px;height:60px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;box-shadow:0 4px 14px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.18);overflow:hidden}
+.po-tile img{width:42px;height:42px;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))}
+.po-tile::after{content:'';position:absolute;inset:0;background:linear-gradient(155deg,rgba(255,255,255,0.16) 0%,transparent 55%);z-index:1}
+.po-tile.tbd{background:#1a1f2e;border:1.5px dashed rgba(255,255,255,0.15)}
+.po-tile.tbd::after{display:none}
+.po-tile.tbd .tbd-mark{font-family:'Bebas Neue',-apple-system,sans-serif;font-size:18px;font-weight:900;letter-spacing:1.5px;color:rgba(255,255,255,0.22)}
+.po-tinfo{min-width:0;overflow:hidden}
+.po-team.away .po-tinfo{text-align:right}
+.po-city{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.po-tname{font-size:20px;font-weight:900;letter-spacing:.3px;color:#fff;line-height:1.05;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.po-prow{display:flex;align-items:center;gap:6px;margin-top:3px}
+.po-team.away .po-prow{flex-direction:row-reverse}
+.po-pname{font-size:12px;font-weight:800;color:rgba(255,255,255,0.7);white-space:nowrap}
+.po-seedchip{font-size:9px;font-weight:900;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);padding:2px 6px;border-radius:2px;color:rgba(255,255,255,0.55);letter-spacing:.3px}
+.po-center{flex-shrink:0;text-align:center;padding:0 8px;min-width:118px}
+.po-score{font-family:'Bebas Neue',-apple-system,sans-serif;font-size:54px;font-weight:900;letter-spacing:3px;line-height:1;margin-bottom:8px;text-shadow:0 2px 12px rgba(0,0,0,0.4)}
+.po-score-sep{color:#2a3040;margin:0 3px}
+.po-bye{font-family:'Bebas Neue',-apple-system,sans-serif;font-size:38px;font-weight:900;letter-spacing:3px;color:#EF3B24;line-height:1;margin:8px 0 6px;text-shadow:0 2px 12px rgba(0,0,0,0.4)}
+.po-dots{display:flex;justify-content:center;gap:5px;margin-bottom:6px}
+.po-d{width:10px;height:10px;border-radius:50%;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,0.4)}
+.po-d.empty{background:transparent;border:1.5px solid rgba(255,255,255,0.13);box-shadow:none}
+.po-lead{font-size:8px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.35)}
+.po-footer{background:#080c12;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:8px;position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.04)}
+.po-gtext{font-size:9px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.po-actions{display:flex;gap:6px;flex-shrink:0}
+.po-badge{font-size:8px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:4px 9px;border-radius:2px;flex-shrink:0}
+.po-b-gold {background:#B8960C;color:#000}
+.po-b-red  {background:#C8102E;color:#fff}
+.po-b-semis{background:#1a3870;color:#6fa3f5;border:1px solid #2a4890}
+.po-b-final{background:#552583;color:#FDB927;border:1px solid #6e3aa3}
+.po-b-await{background:transparent;color:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.12)}
+.po-b-done {background:rgba(34,197,94,0.15);color:#4ade80;border:1px solid rgba(34,197,94,0.25)}
+.po-add-btn{font-size:9px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#F7C948;background:rgba(247,201,72,0.1);border:1px solid rgba(247,201,72,0.35);padding:5px 10px;cursor:pointer;border-radius:2px;flex-shrink:0;font-family:inherit}
+.po-add-btn:active{background:rgba(247,201,72,0.2)}
+.po-await {opacity:0.5}
+/* Game log expandable */
+.po-games-log{background:#080c12;padding:0 20px;max-height:0;overflow:hidden;transition:max-height .25s,padding .25s;border-top:1px solid rgba(255,255,255,0.04)}
+.po-games-log.open{max-height:400px;padding:12px 20px}
+.po-glog-row{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);gap:8px}
+.po-glog-row:last-child{border-bottom:none}
+.po-glog-g{font-size:9px;font-weight:900;color:rgba(255,255,255,0.3);letter-spacing:1.5px;min-width:36px}
+.po-glog-side{flex:1;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px}
+.po-glog-side.right{justify-content:flex-end}
+.po-glog-win{color:#fff}
+.po-glog-lose{color:rgba(255,255,255,0.3)}
+.po-glog-score{background:rgba(0,0,0,0.3);padding:4px 8px;font-size:13px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:1px;min-width:64px;text-align:center}
+.po-glog-score.placeholder{color:rgba(255,255,255,0.25);font-size:10px;letter-spacing:1.5px}
+.po-glog-edit{background:none;border:none;color:rgba(255,255,255,0.25);cursor:pointer;font-size:11px;padding:4px;line-height:1}
+.po-glog-edit:hover{color:rgba(255,255,255,0.6)}
+
 @media(max-width:500px){
   .header-right{display:none}
   .header-title{font-size:36px}
@@ -249,6 +317,17 @@ footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spaci
   </div>
 </div>
 
+<!-- ── PLAYOFFS PAGE ── -->
+<div id="page-playoffs" class="page">
+  <div class="page-header">
+    <div class="page-title">Playoffs</div>
+    <div class="page-subtitle">Season 2026 · Best of 7</div>
+  </div>
+  <div id="playoffs-wrap" class="po-wrap">
+    <div class="loader">Loading playoffs…</div>
+  </div>
+</div>
+
 <!-- ── STATS PAGE ── -->
 <div id="page-stats" class="page">
   <div class="page-header">
@@ -294,6 +373,9 @@ footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spaci
   <button class="nav-btn" id="nav-games" onclick="showPage('games')">
     <span class="nav-icon">🏀</span>Games
   </button>
+  <button class="nav-btn" id="nav-playoffs" onclick="showPage('playoffs')">
+    <span class="nav-icon">🔥</span>Playoffs
+  </button>
   <button class="nav-btn" id="nav-stats" onclick="showPage('stats')">
     <span class="nav-icon">📊</span>Stats
   </button>
@@ -315,10 +397,12 @@ const PLAYIN_SPOTS = 5;
 
 let matchesData    = null;
 let standingsData  = null;
+let playoffsData   = null;
 let currentRecord  = null;
 let standingsLoaded = false;
 let gamesLoaded     = false;
 let statsLoaded     = false;
+let playoffsLoaded  = false;
 
 // ── Navigation ────────────────────────────────────────────────────────────
 function showPage(name) {
@@ -328,6 +412,7 @@ function showPage(name) {
   document.getElementById('nav-' + name).classList.add('active');
   if (name === 'standings') loadStandings();
   if (name === 'games')     loadGames();
+  if (name === 'playoffs')  loadPlayoffs();
   if (name === 'stats')     loadStats();
 }
 
@@ -626,10 +711,16 @@ async function submitScore() {
   btn.textContent = 'Saving…';
 
   try {
-    const res  = await fetch('/api/submit', {
+    const isPlayoff = currentRecord.kind === 'playoff';
+    const url = isPlayoff ? '/api/playoff-submit' : '/api/submit';
+    const body = isPlayoff
+      ? { seriesId: currentRecord.seriesId, gameNum: currentRecord.gameNum, homeScore: hs, awayScore: as_, action: currentRecord.isEdit ? 'edit' : 'add' }
+      : { gameId: currentRecord.gameId, homeScore: hs, awayScore: as_ };
+
+    const res  = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ gameId: currentRecord.gameId, homeScore: hs, awayScore: as_ }),
+      body: JSON.stringify(body),
     });
     const data = await res.json();
     if (!data.ok) throw new Error(data.error);
@@ -640,14 +731,19 @@ async function submitScore() {
     showToast(`${winner} wins! ${big}–${small} 🏆`);
 
     // Refresh everything
-    matchesData    = null;
-    standingsData  = null;
-    gamesLoaded    = false;
+    matchesData     = null;
+    standingsData   = null;
+    playoffsData    = null;
+    gamesLoaded     = false;
     standingsLoaded = false;
-    statsLoaded    = false;
-    loadStandings(true);
-    if (document.getElementById('page-games').classList.contains('active')) {
-      loadGames(true);
+    statsLoaded     = false;
+    playoffsLoaded  = false;
+
+    if (isPlayoff) {
+      loadPlayoffs(true);
+    } else {
+      loadStandings(true);
+      if (document.getElementById('page-games').classList.contains('active')) loadGames(true);
     }
   } catch (e) {
     errEl.textContent = e.message || 'Something went wrong. Try again.';
@@ -739,6 +835,206 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── Playoffs ──────────────────────────────────────────────────────────────
+async function loadPlayoffs(force) {
+  if (playoffsLoaded && !force) return;
+  document.getElementById('playoffs-wrap').innerHTML = '<div class="loader">Loading playoffs…</div>';
+  try {
+    const res  = await fetch('/api/playoffs');
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error);
+    playoffsData = data.series;
+    renderPlayoffs();
+    playoffsLoaded = true;
+  } catch (e) {
+    document.getElementById('playoffs-wrap').innerHTML = '<div class="empty">Failed to load playoffs.<br><br>Check connection and retry.</div>';
+  }
+}
+
+function renderPlayoffs() {
+  if (!playoffsData) return;
+  const wrap = document.getElementById('playoffs-wrap');
+
+  // Group by round
+  const rounds = { 'play-in': [], 'semis': [], 'final': [] };
+  playoffsData.forEach(s => { (rounds[s.round] = rounds[s.round] || []).push(s); });
+
+  let html = '';
+  if (rounds['play-in'].length) {
+    html += `<div class="po-section-divider"><div class="po-pill playin">Play-In Tournament</div><div class="po-rule"></div></div>`;
+    html += rounds['play-in'].map(renderSeriesCard).join('');
+  }
+  if (rounds['semis'].length) {
+    html += `<div class="po-section-divider"><div class="po-pill semis">Playoffs · Semifinals</div><div class="po-rule"></div></div>`;
+    html += rounds['semis'].map(renderSeriesCard).join('');
+  }
+  if (rounds['final'].length) {
+    html += `<div class="po-section-divider"><div class="po-pill final">Final · Championship</div><div class="po-rule"></div></div>`;
+    html += rounds['final'].map(renderSeriesCard).join('');
+  }
+  wrap.innerHTML = html;
+}
+
+function renderSeriesCard(s) {
+  const isAwait = s.status === 'awaiting';
+  const isComplete = s.status === 'complete';
+
+  // Tiles
+  const homeTile = s.home
+    ? `<div class="po-tile" style="background:${s.home.color}"><img src="${s.home.logo}" alt="${s.home.team}"></div>`
+    : `<div class="po-tile tbd"><span class="tbd-mark">TBD</span></div>`;
+  const awayTile = s.away
+    ? `<div class="po-tile" style="background:${s.away.color}"><img src="${s.away.logo}" alt="${s.away.team}"></div>`
+    : `<div class="po-tile tbd"><span class="tbd-mark">TBD</span></div>`;
+
+  // Wash colors (subtle background tint)
+  const washL = s.home?.color ? hexToRgba(s.home.color, 0.22) : 'transparent';
+  const washR = s.away?.color ? hexToRgba(s.away.color, 0.22) : 'transparent';
+
+  // Team info
+  const homeInfo = s.home
+    ? `<div class="po-city">${s.home.team || ''}</div>
+       <div class="po-tname">${s.home.team || s.home.player}</div>
+       <div class="po-prow">${s.home.seed ? `<span class="po-seedchip">#${s.home.seed}</span>`:''}<span class="po-pname">${s.home.player}</span></div>`
+    : `<div class="po-city" style="opacity:0.3">Opponent</div>
+       <div class="po-tname" style="color:rgba(255,255,255,0.22)">TBD</div>
+       <div class="po-prow"><span class="po-pname" style="color:rgba(255,255,255,0.25)">${s.awaitingFrom==='play-in'?'Play-In winner':s.awaitingFrom==='semis'?'Semis winner':'—'}</span></div>`;
+  const awayInfo = s.away
+    ? `<div class="po-city">${s.away.team || ''}</div>
+       <div class="po-tname">${s.away.team || s.away.player}</div>
+       <div class="po-prow"><span class="po-pname">${s.away.player}</span>${s.away.seed ? `<span class="po-seedchip">#${s.away.seed}</span>`:''}</div>`
+    : `<div class="po-city" style="opacity:0.3">Opponent</div>
+       <div class="po-tname" style="color:rgba(255,255,255,0.22)">TBD</div>
+       <div class="po-prow"><span class="po-pname" style="color:rgba(255,255,255,0.25)">${s.awaitingFrom==='play-in'?'Play-In winner':s.awaitingFrom==='semis'?'Semis winner':'—'}</span></div>`;
+
+  // Center: score or BYE
+  let centerHtml;
+  if (isAwait && !s.home) {
+    centerHtml = `<div class="po-bye">—</div>`;
+  } else if (isAwait) {
+    centerHtml = `<div class="po-bye">BYE</div>`;
+  } else {
+    const hC = s.home?.color || '#fff';
+    const aC = s.away?.color || '#fff';
+    centerHtml = `<div class="po-score"><span style="color:${hC}">${s.homeWins}</span><span class="po-score-sep">–</span><span style="color:${aC}">${s.awayWins}</span></div>`;
+  }
+
+  // Dots (7 dots for BO7)
+  const dotsHtml = Array.from({length: s.winsToClinch * 2 - 1}, (_, i) => {
+    const g = s.games[i];
+    if (!g || !g.winner) return '<div class="po-d empty"></div>';
+    const c = g.winner === 'home' ? (s.home?.color || '#fff') : (s.away?.color || '#fff');
+    return `<div class="po-d" style="background:${c}"></div>`;
+  }).join('');
+
+  // Lead label
+  let leadLabel;
+  if (isAwait)               leadLabel = `Awaiting ${s.awaitingFrom === 'play-in' ? 'Play-In' : s.awaitingFrom}`;
+  else if (isComplete)       leadLabel = `${s.winner} wins ${Math.max(s.homeWins,s.awayWins)}–${Math.min(s.homeWins,s.awayWins)}`;
+  else if (s.homeWins > s.awayWins)  leadLabel = `${s.home.player} leads ${s.homeWins}–${s.awayWins}`;
+  else if (s.awayWins > s.homeWins)  leadLabel = `${s.away.player} leads ${s.awayWins}–${s.homeWins}`;
+  else if (s.homeWins === 0 && s.awayWins === 0) leadLabel = `Series ${s.home && s.away ? 'tied 0–0' : 'awaits'}`;
+  else                        leadLabel = `Series tied ${s.homeWins}–${s.awayWins}`;
+
+  // Footer text + badges
+  let footerText, badges = '';
+  if (isAwait) {
+    footerText = s.away === null && s.home ? '#1 Seed · First-Round Bye' : 'Awaiting opponent';
+    badges = `<span class="po-badge po-b-await">Awaiting</span>`;
+  } else if (isComplete) {
+    footerText = `Series Complete · ${s.format}`;
+    badges = `<span class="po-badge po-b-done">✓ Done</span>`;
+  } else {
+    footerText = `Game ${s.nextGameNum} · ${s.format} · 2-2-1-1-1`;
+    // Round badge
+    if (s.round === 'play-in') badges += `<span class="po-badge po-b-gold">Play-In</span>`;
+    if (s.round === 'semis')   badges += `<span class="po-badge po-b-semis">Semis</span>`;
+    if (s.round === 'final')   badges += `<span class="po-badge po-b-final">Final</span>`;
+    badges += `<button class="po-add-btn" onclick="openPlayoffModal('${s.id}', ${s.nextGameNum})">+ Game ${s.nextGameNum}</button>`;
+  }
+
+  // Game log (collapsible)
+  const logRows = s.games.map(g => {
+    const hasScore = g.homeScore != null && g.awayScore != null;
+    const hWin = g.winner === 'home';
+    const aWin = g.winner === 'away';
+    const scoreDisplay = hasScore
+      ? `<span class="po-glog-score"><span style="color:${hWin?'#fff':'rgba(255,255,255,0.3)'}">${g.homeScore}</span> – <span style="color:${aWin?'#fff':'rgba(255,255,255,0.3)'}">${g.awayScore}</span></span>`
+      : `<span class="po-glog-score placeholder">W/L only</span>`;
+    return `<div class="po-glog-row">
+      <span class="po-glog-g">G${g.g}</span>
+      <span class="po-glog-side ${hWin?'po-glog-win':'po-glog-lose'}">${s.home?.player || '—'}</span>
+      ${scoreDisplay}
+      <span class="po-glog-side right ${aWin?'po-glog-win':'po-glog-lose'}">${s.away?.player || '—'}</span>
+      <button class="po-glog-edit" onclick="openPlayoffModal('${s.id}', ${g.g}, ${g.homeScore == null ? 'null' : g.homeScore}, ${g.awayScore == null ? 'null' : g.awayScore}, 'edit')" title="Edit">✏️</button>
+    </div>`;
+  }).join('');
+  const logHtml = s.games.length
+    ? `<div class="po-games-log" id="po-log-${s.id}">${logRows}</div>`
+    : '';
+
+  return `<div class="po-card ${isAwait?'po-await':''}">
+    <div class="po-card-inner" style="--wash-l:${washL};--wash-r:${washR};" ${s.games.length ? `onclick="togglePlayoffLog('${s.id}')"` : ''}>
+      <div class="po-teams">
+        <div class="po-team">
+          <div class="po-tile-row">${homeTile}<div class="po-tinfo">${homeInfo}</div></div>
+        </div>
+        <div class="po-center">
+          ${centerHtml}
+          <div class="po-dots">${dotsHtml}</div>
+          <div class="po-lead">${leadLabel}</div>
+        </div>
+        <div class="po-team away">
+          <div class="po-tile-row">${awayTile}<div class="po-tinfo">${awayInfo}</div></div>
+        </div>
+      </div>
+    </div>
+    ${logHtml}
+    <div class="po-footer">
+      <div class="po-gtext">${footerText}</div>
+      <div class="po-actions">${badges}</div>
+    </div>
+  </div>`;
+}
+
+function togglePlayoffLog(seriesId) {
+  const el = document.getElementById('po-log-' + seriesId);
+  if (el) el.classList.toggle('open');
+}
+
+function hexToRgba(hex, a) {
+  const h = hex.replace('#','');
+  const r = parseInt(h.substring(0,2),16);
+  const g = parseInt(h.substring(2,4),16);
+  const b = parseInt(h.substring(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+// ── Playoff Modal ─────────────────────────────────────────────────────────
+function openPlayoffModal(seriesId, gameNum, existingHome, existingAway, action) {
+  const s = (playoffsData || []).find(x => x.id === seriesId);
+  if (!s) return;
+  // Don't open if series is awaiting
+  if (s.status === 'awaiting') {
+    showToast('Series belum bisa diisi — tunggu round sebelumnya');
+    return;
+  }
+  const isEdit = action === 'edit';
+  currentRecord = { kind:'playoff', seriesId, gameNum, home: s.home.player, away: s.away.player, isEdit };
+  document.querySelector('#modal .modal-title').textContent = isEdit ? `Edit Game ${gameNum}` : `Enter Game ${gameNum}`;
+  document.getElementById('modal-matchup').textContent = `${s.label} · ${s.home.player} (Home)  vs  ${s.away.player} (Away)`;
+  document.getElementById('modal-home-label').textContent = s.home.player;
+  document.getElementById('modal-away-label').textContent = s.away.player;
+  document.getElementById('score-home').value = (isEdit && existingHome != null) ? existingHome : '';
+  document.getElementById('score-away').value = (isEdit && existingAway != null) ? existingAway : '';
+  document.getElementById('modal-error').textContent = '';
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = false;
+  btn.textContent = isEdit ? 'Update' : 'Submit';
+  document.getElementById('modal').classList.add('open');
+  setTimeout(() => document.getElementById('score-home').focus(), 150);
 }
 
 // ── Boot ──────────────────────────────────────────────────────────────────
