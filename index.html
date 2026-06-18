@@ -261,13 +261,14 @@ footer{text-align:center;padding:20px;font-size:9px;font-weight:700;letter-spaci
 .po-team.away .po-prow{flex-direction:row-reverse}
 .po-pname{font-size:12px;font-weight:800;color:rgba(255,255,255,0.7);white-space:nowrap}
 .po-seedchip{font-size:9px;font-weight:900;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);padding:2px 6px;border-radius:2px;color:rgba(255,255,255,0.55);letter-spacing:.3px}
+.po-stats{font-size:9px;font-weight:700;letter-spacing:.5px;color:rgba(255,255,255,0.35);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .po-center{flex-shrink:0;text-align:center;padding:0 8px;min-width:118px}
 .po-score{font-family:'Bebas Neue',-apple-system,sans-serif;font-size:54px;font-weight:900;letter-spacing:3px;line-height:1;margin-bottom:8px;text-shadow:0 2px 12px rgba(0,0,0,0.4)}
 .po-score-sep{color:#2a3040;margin:0 3px}
 .po-bye{font-family:'Bebas Neue',-apple-system,sans-serif;font-size:38px;font-weight:900;letter-spacing:3px;color:#EF3B24;line-height:1;margin:8px 0 6px;text-shadow:0 2px 12px rgba(0,0,0,0.4)}
 .po-dots{display:flex;justify-content:center;gap:5px;margin-bottom:6px}
 .po-d{width:10px;height:10px;border-radius:50%;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,0.4)}
-.po-d.empty{background:transparent;border:1.5px solid rgba(255,255,255,0.13);box-shadow:none}
+.po-d-empty{background:transparent;border:1.5px solid rgba(255,255,255,0.13);box-shadow:none}
 .po-lead{font-size:8px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.35)}
 .po-footer{background:#080c12;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:8px;position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.04)}
 .po-gtext{font-size:9px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -969,10 +970,34 @@ function renderMiniStandings() {
       <span class="po-mini-st-rec">${p.w}–${p.l}</span>
       <span class="po-mini-st-tag ${tagFor(p.rank)}">${tagText(p.rank)}</span>
     </div>`).join('');
+  // If odd row count, add filler row to balance grid
+  const fillerRow = (standingsData.length % 2 === 1)
+    ? `<div class="po-mini-st-row" style="opacity:0.4">
+         <span class="po-mini-st-seed" style="color:rgba(255,255,255,0.1)">—</span>
+         <div class="po-mini-st-logo" style="background:transparent;border:1px dashed rgba(255,255,255,0.08)"></div>
+         <span class="po-mini-st-name" style="color:rgba(255,255,255,0.2);font-size:10px;letter-spacing:2px">42 Games · Season Complete</span>
+       </div>`
+    : '';
   return `<div class="po-mini-standings">
     <div class="po-mini-st-header"><span>Regular Season Standings</span><span style="opacity:0.6">W – L</span></div>
-    <div class="po-mini-st-grid">${rows}</div>
+    <div class="po-mini-st-grid">${rows}${fillerRow}</div>
   </div>`;
+}
+
+// Team city map (for poster-style "Los Angeles \n LAKERS" treatment)
+const TEAM_CITY = {
+  'Lakers':'Los Angeles', 'Celtics':'Boston', 'Cavaliers':'Cleveland',
+  'Spurs':'San Antonio',  'Thunder':'Oklahoma City',
+  'Wolves':'Minnesota',   'Knicks':'New York'
+};
+
+function playerStatsLine(playerName) {
+  if (!standingsData) return '';
+  const p = standingsData.find(x => x.name === playerName);
+  if (!p || !p.gp) return '';
+  const pdLbl = (p.pd > 0 ? '+' : '') + p.pd;
+  const ppg = p.ppg != null ? p.ppg.toFixed(1) + ' PPG' : '';
+  return `${p.w}-${p.l}${ppg ? ' · ' + ppg : ''} · ${pdLbl} PD`;
 }
 
 function renderSeriesCard(s) {
@@ -992,17 +1017,24 @@ function renderSeriesCard(s) {
   const washR = s.away?.color ? hexToRgba(s.away.color, 0.22) : 'transparent';
 
   // Team info
+  const homeCity = s.home?.team ? (TEAM_CITY[s.home.team] || '') : '';
+  const awayCity = s.away?.team ? (TEAM_CITY[s.away.team] || '') : '';
+  const homeStats = s.home ? playerStatsLine(s.home.player) : '';
+  const awayStats = s.away ? playerStatsLine(s.away.player) : '';
+
   const homeInfo = s.home
-    ? `<div class="po-city">${s.home.team || ''}</div>
+    ? `<div class="po-city">${homeCity}</div>
        <div class="po-tname">${s.home.team || s.home.player}</div>
-       <div class="po-prow">${s.home.seed ? `<span class="po-seedchip">#${s.home.seed}</span>`:''}<span class="po-pname">${s.home.player}</span></div>`
+       <div class="po-prow">${s.home.seed ? `<span class="po-seedchip">#${s.home.seed}</span>`:''}<span class="po-pname">${s.home.player}</span></div>
+       ${homeStats ? `<div class="po-stats">${homeStats}</div>` : ''}`
     : `<div class="po-city" style="opacity:0.3">Opponent</div>
        <div class="po-tname" style="color:rgba(255,255,255,0.22)">TBD</div>
        <div class="po-prow"><span class="po-pname" style="color:rgba(255,255,255,0.25)">${s.awaitingFrom==='play-in'?'Play-In winner':s.awaitingFrom==='semis'?'Semis winner':'—'}</span></div>`;
   const awayInfo = s.away
-    ? `<div class="po-city">${s.away.team || ''}</div>
+    ? `<div class="po-city">${awayCity}</div>
        <div class="po-tname">${s.away.team || s.away.player}</div>
-       <div class="po-prow"><span class="po-pname">${s.away.player}</span>${s.away.seed ? `<span class="po-seedchip">#${s.away.seed}</span>`:''}</div>`
+       <div class="po-prow"><span class="po-pname">${s.away.player}</span>${s.away.seed ? `<span class="po-seedchip">#${s.away.seed}</span>`:''}</div>
+       ${awayStats ? `<div class="po-stats">${awayStats}</div>` : ''}`
     : `<div class="po-city" style="opacity:0.3">Opponent</div>
        <div class="po-tname" style="color:rgba(255,255,255,0.22)">TBD</div>
        <div class="po-prow"><span class="po-pname" style="color:rgba(255,255,255,0.25)">${s.awaitingFrom==='play-in'?'Play-In winner':s.awaitingFrom==='semis'?'Semis winner':'—'}</span></div>`;
@@ -1022,7 +1054,7 @@ function renderSeriesCard(s) {
   // Dots (7 dots for BO7)
   const dotsHtml = Array.from({length: s.winsToClinch * 2 - 1}, (_, i) => {
     const g = s.games[i];
-    if (!g || !g.winner) return '<div class="po-d empty"></div>';
+    if (!g || !g.winner) return '<div class="po-d po-d-empty"></div>';
     const c = g.winner === 'home' ? (s.home?.color || '#fff') : (s.away?.color || '#fff');
     return `<div class="po-d" style="background:${c}"></div>`;
   }).join('');
