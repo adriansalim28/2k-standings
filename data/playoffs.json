@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "format": "BO7",
-  "updated": "2026-06-19T13:36:20.688Z",
+  "updated": "2026-06-19T14:25:34.732Z",
   "series": [
     {
       "id": "play-in",
@@ -101,6 +101,13 @@
           "awayScore": 58,
           "winner": "home",
           "playedAt": "2026-06-19T13:36:20.688Z"
+        },
+        {
+          "g": 2,
+          "homeScore": 50,
+          "awayScore": 70,
+          "winner": "away",
+          "playedAt": "2026-06-19T14:25:34.732Z"
         }
       ]
     },
