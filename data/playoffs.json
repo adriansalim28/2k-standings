@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "format": "BO7",
-  "updated": "2026-06-19T16:31:50.157Z",
+  "updated": "2026-06-22T14:25:12.915Z",
   "series": [
     {
       "id": "play-in",
@@ -75,7 +75,15 @@
         "series": "final",
         "slot": "home"
       },
-      "games": []
+      "games": [
+        {
+          "g": 1,
+          "homeScore": 48,
+          "awayScore": 71,
+          "winner": "away",
+          "playedAt": "2026-06-22T14:25:12.915Z"
+        }
+      ]
     },
     {
       "id": "semis-2",
